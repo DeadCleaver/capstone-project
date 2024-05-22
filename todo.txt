@@ -1,0 +1,69 @@
+COLOR PALETTE
+Blueviolet - #9047ff
+Black (antracite) - #212121 
+
+BASE
+
+- Un utente può registrarsi
+- Gli utenti registrati possono creare una sessione // aggiungere parametri orari sessione
+- Utenti registrati e non possono iscriversi a una sessione dando propria email/username // come gestire gli utenti non registrati?
+
+ALTRO
+- Le sessioni passate sono nascoste (o cancellate?) || gestito front-end || gestire con un endpoint di sessioni ancora da avvenire
+- Inserire un elenco DB di giochi, con descrizioni e cover già disponibili
+SE VUOI ESAGERARE
+- Inserire la possibilità di commentare la sessione (ma solo dopo che questa è avvenuta), oppure commentare/recensire il gioco
+- Inserire la possibilità di inviare una mail a tutti gli utenti registrati quando viene creata una nuova sessione
+- Condivisione del link della sessione
+
+FINEZZE?
+- Middleware di verifica
+
+
+Tipi di DB:
+
+User:
+- nome
+- cognome
+- username
+- mail
+- data di nascita
+• giochi giocati (Array)
+
+Sessioni:
+- Titolo
+- Descrizione
+- Giochi (collegato a giochi)
+- Trigger Warning
+- Giorno
+- Ora
+- Numero minimo di partecipanti
+- Numero massimo di partecipanti
+
+
+Giochi:
+- Titolo
+- Descrizione
+
+Flow
+- Utente registrato/loggato può creare una voce gioco, con titolo e descrizione. Questo va a popolare un archivio a cui si accede per creare le sessioni.
+- Utente loggato crea una sessione, con i dati del modello, scegliendo il gioco da un menu collegato a un altro database
+
+
+UTENTI GUEST 
+- Nome, Cognome, Mail - Registrazione anche per i Guest
+- Endpoint per chi si registra come guest e si iscrive // contemporaneo
+- Endpoint per i guest
+
+- Autenticazione / Login / Registrazione
+- Per i guest non c'è Login e Autenticazione (nella sessione)
+> verifica che mail esista già, se non esiste lo crea come se fosse un utente (per aggiungerlo alla sessione con l'id)
+
+- Mettere un referencing ai giochi // senza creare routes
+
+MIN/MAX giocatori
+_ campoplayers.length = max > non puoi aggiunegre altri player || sia da middleware che da frontend ||
+
+/* enpoint singolo con più funzioni */
+// ENDPOINT per abbinare un utente alla sessione
+// ENPOINT per abbinare un GUEST alla sessione (ref 55 del to-do)
