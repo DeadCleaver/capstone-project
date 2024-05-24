@@ -36,6 +36,7 @@ userRoute.get("/", async (req, res, next) => {
 });
 
 /* richiesta DELETE di un utente */
+// verifica che può deletare solo se stesso
 userRoute.delete("/:id", authMid, async (req, res, next) => {
   try {
     await User.deleteOne({
@@ -48,6 +49,7 @@ userRoute.delete("/:id", authMid, async (req, res, next) => {
 });
 
 /* richiesta PUT di un singolo autore */
+// verifica che può deletare solo se stesso
 userRoute.put("/:id", authMid, async (req, res, next) => {
   try {
     let user = await User.findByIdAndUpdate(req.params.id, req.body, {

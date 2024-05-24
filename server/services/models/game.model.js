@@ -16,4 +16,4 @@ const gameSchema = new Schema(
           }
         );
         
-        export default model("Game", gameSchema);
+export default model("Game", gameSchema);

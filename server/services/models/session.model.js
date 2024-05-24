@@ -14,6 +14,11 @@ const sessionSchema = new Schema(
         type: Schema.Types.ObjectId, 
         ref: 'User' 
     },
+    game: {
+      type: Schema.Types.ObjectId,
+      ref: 'Game',
+      required: true
+    },
     maxplayers: {
       type: Number,
       required: true,

@@ -40,43 +40,37 @@ sessionRoute.get("/:id", async (req, res, next) => {
   }
 });
 
-/* chiamata DELETE di una sessione */ 
-
-// VECCHIA
-/* sessionRoute.delete("/:id", authMid, async (req, res, next) => {
-  try {
-    await Session.deleteOne({
-      _id: req.params.id,
-    });
-    res.send("La sessione è stata eliminata").status(204);
-  } catch (err) {
-    next(err);
-  }
-}); */
+/* chiamata DELETE di una sessione */
 
 sessionRoute.delete("/:id", authMid, async (req, res, next) => {
   try {
     const session = await Session.findById(req.params.id);
-    
+
     // Verifica se la sessione esiste
     if (!session) {
       return res.status(404).send("Sessione non trovata");
     }
-    
+
     // Verifica se l'utente loggato è il creatore della sessione
     if (req.user._id.toString() !== session.creator.toString()) {
-      return res.status(403).send("Solo il creatore della sessione può eliminarla");
+      let err = new Error(
+        "Non sei autorizzato a modificare la sessione di un altro"
+      );
+      err.status = 403;
+      throw err;
     }
+    
+    /*  await session.remove(); */
+    await Session.findByIdAndDelete(req.params.id);
 
-    await session.remove();
     return res.status(204).send("La sessione è stata eliminata");
   } catch (err) {
     next(err);
   }
 });
 
-
 /* chiamata PUT di una sessione */
+// Da aggiungere: verifica che l'utente loggato sia il creatore della sessione
 sessionRoute.put("/:id", authMid, async (req, res, next) => {
   try {
     let post = await Session.findByIdAndUpdate(req.params.id, req.body, {
@@ -89,7 +83,8 @@ sessionRoute.put("/:id", authMid, async (req, res, next) => {
 });
 
 /* IMMAGINI */
-/* richiesta PATCH per l'immagine cover del post */
+/* richiesta PATCH per l'immagine cover della sessione */
+// Da aggiungere: verifica che l'utente loggato sia il creatore della sessione
 sessionRoute.patch(
   "/:id/cover",
   authMid,
@@ -111,7 +106,7 @@ sessionRoute.patch(
 /* GIOCATORI */
 
 /* aggiungere un giocatore */
-sessionRoute.post("/:sessionId/players",  async (req, res, next) => {
+sessionRoute.post("/:sessionId/players", async (req, res, next) => {
   const { sessionId } = req.params;
   const { name, surname, email } = req.body;
 
@@ -138,26 +133,6 @@ sessionRoute.post("/:sessionId/players",  async (req, res, next) => {
     session.players.push({ user: user._id });
     await session.save();
 
-    // aggiungi giocare alla sessione - verifiche varie // RIMOSSO 
-    // verifica che l'utente sia registrato (con password) o non registrato (senza password)
-    /* if (user.password) {
-      // se l'utente è registrato verifica se l'utente loggato corrisponda, tramite authMid
-      if (req.user.email === user.email) {
-        session.players.push({ user: user._id });
-        await session.save();
-        return res.status(200).send(session);
-      } else {
-        // L'utente autenticato non corrisponde all'utente registrato - la pass non corrisponde
-        return res.status(403).send("Non hai il permesso per aggiungere questo giocatore.");
-      }
-    } else {
-      // l'utente non è registrato (è senza password), può essere aggiunto alla sessione senza verifiche ulteriori
-
-      session.players.push({ user: user._id });
-      await session.save();
-      return res.status(200).send(session);
-    } */
-
     res.status(200).send(session);
   } catch (err) {
     next(err);
@@ -165,28 +140,35 @@ sessionRoute.post("/:sessionId/players",  async (req, res, next) => {
 });
 
 /* rimozione giocatore */
-sessionRoute.delete("/:sessionId/players/:playerId", authMid, async (req, res, next) => {
-  const { sessionId, playerId } = req.params;
+sessionRoute.delete(
+  "/:sessionId/players/:playerId",
+  authMid,
+  async (req, res, next) => {
+    const { sessionId, playerId } = req.params;
 
-  try {
-    const session = await Session.findById(sessionId);
+    try {
+      const session = await Session.findById(sessionId);
 
-    if (!session) {
-      return res.status(404).send("Sessione non trovata");
+      if (!session) {
+        return res.status(404).send("Sessione non trovata");
+      }
+
+      if (req.user._id.toString() !== session.creator.toString()) {
+        return res
+          .status(403)
+          .send("Solo il creatore della sessione può rimuovere giocatori");
+      }
+
+      // Rimuovi il giocatore dalla sessione filtrando ed escludendo se uguale a playerId
+      session.players = session.players.filter(
+        (player) => player.user.toString() !== playerId
+      );
+
+      await session.save();
+
+      return res.status(200).send(session);
+    } catch (err) {
+      next(err);
     }
-
-    if (req.user._id.toString() !== session.creator.toString()) {
-      return res.status(403).send("Solo il creatore della sessione può rimuovere giocatori");
-    }
-
-    // Rimuovi il giocatore dalla sessione filtrando ed escludendo se uguale a playerId
-    session.players = session.players.filter(player => player.user.toString() !== playerId);
-
-    await session.save();
-
-    return res.status(200).send(session);
-  } catch (err) {
-    next(err);
   }
-});
-
+);
