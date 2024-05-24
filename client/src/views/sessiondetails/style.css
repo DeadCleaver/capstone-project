@@ -1,0 +1,24 @@
+.session-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-top: 150px; 
+}
+
+.session-cover {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    max-height: 80vh;
+    object-fit: cover;
+    object-position: 0% 0%;
+  }
+
+.session-title {
+  font-family: "Silkscreen";
+  font-weight: bold;
+}
+
+.f-zilla {
+  font-family: "Zilla Slab";
+}

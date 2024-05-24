@@ -1,0 +1,4 @@
+.avatar-dropdown, .avatar-dropdown.show {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}

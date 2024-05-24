@@ -1,5 +1,6 @@
 COLOR PALETTE
 Blueviolet - #9047ff
+Blueviolet Scuro - #5b17c4
 Black (antracite) - #212121 
 
 BASE

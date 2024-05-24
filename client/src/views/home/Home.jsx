@@ -1,11 +1,11 @@
 import React, {useState, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SessionList from "../../components/session-list/SessionLIst"
+import SessionList from "../../components/session-list/SessionList"
 
-const Home = () => {
+const Home = ({sessions}) => {
     
-    const [sessions, setSessions] = useState([]);
+   /*  const [sessions, setSessions] = useState([]);
 
     useEffect(() => {
         fetchSessions();
@@ -26,10 +26,10 @@ const Home = () => {
           console.error("Errore nella chiamata al server: ", error);
         }
       };
-
+ */
 
   return (
-    <Container fluid="sm">
+    <Container fluid="sm" style={{marginTop: "100px"}}>
       <SessionList sessions={sessions} />
     </Container>
   );

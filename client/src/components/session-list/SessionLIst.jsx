@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import SessionCard from "../session-card/SessionCard"
 
 const SessionList = ({sessions}) => {
 
   return (
+    <Container>
     <Row>
       {sessions.map((session, i) => (
         <Col
@@ -21,6 +22,7 @@ const SessionList = ({sessions}) => {
         </Col>
       ))}
     </Row>
+    </Container>
   );
 };
 
