@@ -1,11 +1,11 @@
-.session-container {
+.session-details-container {
   display: flex;
   width: 100%;
   flex-direction: column;
   margin-top: 150px; 
 }
 
-.session-cover {
+.session-details-cover {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 50px;
@@ -14,11 +14,7 @@
     object-position: 0% 0%;
   }
 
-.session-title {
+.session-details-title {
   font-family: "Silkscreen";
   font-weight: bold;
-}
-
-.f-zilla {
-  font-family: "Zilla Slab";
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-/* import { UserContext } from "../../context/UserContextProvider";
- */ // da settare il context
+import { UserContext } from "../../context/UserContextProvider";
 
 const LoginModal = ({ show, setShow, userLogin }) => {
   const [email, setEmail] = useState("");
@@ -22,7 +21,7 @@ const LoginModal = ({ show, setShow, userLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/auth/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API}auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,9 +35,8 @@ const LoginModal = ({ show, setShow, userLogin }) => {
 
         // salva il token sia nel local storage che nel context
         localStorage.setItem("token", token);
-        // setUserToken(token)
+        setUserToken(token);
 
-        userLogin();
         toggleShowLogin();
 
         console.log("Login eseguito come: ", user);
@@ -82,10 +80,10 @@ const LoginModal = ({ show, setShow, userLogin }) => {
             />
           </Form.Group>
         </Form>
-        <hr />
+        {/* <hr />
         <div className="d-flex justify-content-center">
           <GoogleLogin />
-        </div>
+        </div> */}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={toggleShowLogin}>

@@ -1,36 +1,56 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Dropdown } from "react-bootstrap";
-import "./style.css";
+import "./AvatarDropdown.css";
 import { Link } from "react-router-dom";
+import LoginModal from "../login-modal/LoginModal";
+import { UserContext } from "../../context/UserContextProvider";
 
 export default function AvatarDropdown() {
+
   const staticAvatar =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  const [show, setShow] = useState(false); 
+  const { userToken, userData, setUserToken } = useContext(UserContext);
+
+  const toggleLoginModal = () => {
+    setShow(!show);
+  };
+
+  const handleLogout = () => {
+    setUserToken("");
+    localStorage.removeItem('token');  
+  };
 
   return (
-    <Dropdown >
+    <Dropdown>
       <Dropdown.Toggle
         variant="secondary"
         id="dropdown-basic"
         className="avatar-dropdown"
       >
-        <span>GUEST</span>
+        <span>{userData ? `${userData.name} ${userData.surname}` : `GUEST`}</span>
         <img
-          src={staticAvatar}
+          src={userData ? userData.avatar : staticAvatar}
           alt="Avatar"
-          className="rounded-circle ms-2"
-          style={{ width: "40px", height: "40px" }}
+          className="rounded-circle ms-2 user-avatar-image"
         />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu align="end" >
-        <Dropdown.Item>Profilo</Dropdown.Item>
-        <Dropdown.Item>Sessioni</Dropdown.Item>
-        <Dropdown.Item>Giochi</Dropdown.Item>
-        <hr />
-        <Dropdown.Item as={Link} to="/register">Registrati</Dropdown.Item>
-        <Dropdown.Item>Log-in</Dropdown.Item>
+      <Dropdown.Menu align="end">
+        {userToken &&  
+                <div>
+                <Dropdown.Item>Profilo</Dropdown.Item>
+                <Dropdown.Item>Sessioni</Dropdown.Item>
+                <Dropdown.Item>Giochi</Dropdown.Item>
+                <hr />
+                </div>
+        }
+        {!userToken && <Dropdown.Item as={Link} to="/register">
+          Registrati
+        </Dropdown.Item>}
+        <Dropdown.Item onClick={userToken ? handleLogout : toggleLoginModal}>{userToken ? `LogOut` : `Log-In`}</Dropdown.Item>
       </Dropdown.Menu>
+      <LoginModal show={show} setShow={setShow}/>
     </Dropdown>
   );
 }

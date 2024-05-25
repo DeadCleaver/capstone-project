@@ -1,0 +1,9 @@
+.f-silkscreen {
+    font-family: 'Silkscreen';
+}
+
+.bg-blueviolet-light {
+    color: white !important;
+    background-color:  #9047ff !important;
+    font-weight: bold;
+}

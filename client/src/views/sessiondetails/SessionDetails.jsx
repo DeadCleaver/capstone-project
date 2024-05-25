@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import Author from "../../components/author/Author";
 import { useParams, useNavigate } from "react-router-dom";
-import "./style.css";
+import "./SessionDetails.css";
 import { format, formatDate } from "date-fns";
 
 export default function SessionDetails({ sessions }) {
@@ -31,18 +31,18 @@ export default function SessionDetails({ sessions }) {
   };
 
   return (
-    <Container className="session-container">
+    <Container className="session-details-container">
       <Row>
         <Col xs={12} md={7}>
-          <Image src={session.cover} fluid className="session-cover" />
+          <Image src={session.cover} fluid className="session-details-cover m-0" />
         </Col>
 
         <Col xs={12} md={5}>
-          <Container className="session-container mt-auto">
-            <h1 className="session-title mb-5">{session.title}</h1>
-            <div className="f-zilla">
+          <Container className="mt-auto">
+            <h1 className="session-details-title mb-5">{session.title}</h1>
+            <div>
               <h6 className="mb-3">{`Giorno della sessione: ${formatDate(session.date)}`}</h6>
-              <h6 className="mb-3">{`Giocatori:  min ${session.minplayers} max ${session.maxplayers}`}</h6>
+              <h6 className="mb-3">{`Giocatori:   ${session.players ? session.players.length : 0} / ${session.maxplayers}`}</h6>
               <hr style={{color: "#5b17c4"}}/>
               <p className="mb-3">{session.description}</p>
             </div>

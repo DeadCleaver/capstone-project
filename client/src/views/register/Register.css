@@ -13,8 +13,8 @@
 }
 
 .avatar-img {
-    width: 100%;
-    max-height: 630px;
+    width: 450px;
+    height: 450px;
     object-fit: cover;
     object-position: 0% 0%;
 }

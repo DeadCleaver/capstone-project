@@ -2,3 +2,10 @@
     background-color: transparent !important;
     border-color: transparent !important;
 }
+
+.user-avatar-image {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    object-position: 0% 0%;
+}

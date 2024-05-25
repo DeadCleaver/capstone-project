@@ -7,8 +7,9 @@ import {
   Row,
   Col,
   CardHeader,
+  Image,
 } from "react-bootstrap";
-import "./style.css";
+import "./Register.css";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -21,11 +22,10 @@ export default function Register() {
   const [previewAvatar, setPreviewAvatar] = useState(null);
 
   const handleAvatarChange = (e) => {
-    const file = e.target.files[0]; // Ottiene il file selezionato
-    setUserAvatar(file); // Salva il file nello stato
-    setPreviewAvatar(URL.createObjectURL(file)); // Crea un URL di anteprima e lo salva nello stato
+    const file = e.target.files[0];
+    setUserAvatar(file);
+    setPreviewAvatar(URL.createObjectURL(file));
   };
-
 
   const staticAvatar =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -66,10 +66,13 @@ export default function Register() {
       const avatarData = new FormData();
       avatarData.append("avatar", avatarFile);
 
-      const response = await fetch(`${process.env.REACT_APP_API}user/${authorId}/avatar`, {
-        method: "PATCH",
-        body: avatarData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API}user/${authorId}/avatar`,
+        {
+          method: "PATCH",
+          body: avatarData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add avatar image");
@@ -84,8 +87,8 @@ export default function Register() {
 
   return (
     <Container className="register-container">
-      <Row>
-        <Col xs={6}>
+      <Row className="justify-content-center">
+        <Col xs={12} md={6}>
           <Card>
             <CardHeader className="f-silkscreen text-center bg-blueviolet-light">
               Registrati
@@ -136,6 +139,13 @@ export default function Register() {
                 />
               </Form.Group>
 
+                <Image
+                  src={previewAvatar || staticAvatar}
+                  alt="Avatar"
+                  className="avatar-img mt-1"
+                />
+
+
               <div className="d-flex justify-content-center">
                 <Button
                   variant="outline-success"
@@ -148,11 +158,11 @@ export default function Register() {
             </Form>
           </Card>
         </Col>
-        <Col xs={6}>
+        {/*         <Col xs={6}>
           <Card>
-            <img src={previewAvatar || staticAvatar} alt="Avatar" />
+            <img src={previewAvatar || staticAvatar} alt="Avatar" className="avatar-img" />
           </Card>
-        </Col>
+        </Col> */}
       </Row>
     </Container>
   );

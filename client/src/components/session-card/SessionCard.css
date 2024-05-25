@@ -1,21 +1,19 @@
-.session-link {
+.session-card-link {
   text-decoration: none;
   color: inherit;
 }
 
-.session-cover {
+.session-card-cover {
   width: 100%;
   height: 250px;
   object-fit: cover;
   object-position: 0% 0%;
-  margin: 0;
 }
 
 .session-card {
   height: 100%;
 }
 
-.session-link {
-  text-decoration: none;
-  color: inherit;
+.session-card-title {
+  color: white;
 }

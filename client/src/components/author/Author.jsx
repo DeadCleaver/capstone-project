@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
-import "./style.css";
+import "./Author.css";
 
 const Author = (props) => {
   const { name, surname, avatar } = props;
