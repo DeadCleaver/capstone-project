@@ -1,86 +1,103 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { Container, Row, Col, Form, Card } from 'react-bootstrap';
-import "./UserPanel.css"
+import React, { useState, useContext, useEffect } from "react";
+import { Container, Row, Col, Button, Stack, Card } from "react-bootstrap";
+import UserCard from "../../components/user-card/UserCard";
+import "./UserPanel.css";
+import { UserContext } from "../../context/UserContextProvider";
+import SessionAdd from "../../components/session-add/SessionAdd";
+import SessionsManager from "../../components/sessions-manager/SessionsManager";
+import GamesManager from "../../components/games-manager/GamesManager";
 
-export default function UserPanel(userData) {
+export default function UserPanel({}) {
+
+  const { userData } = useContext(UserContext);
+  const [selectedSection, setSelectedSection] = useState("managesessions");
+  const [sessions, setSessions] = useState([]);
+  const [games, setGames] = useState([])
 
 
+  const renderSection = () => {
+    switch (selectedSection) {
+      case "createsession":
+        return <SessionAdd games={games} fetchUserSessions={fetchUserSessions} />;
+      case "managesessions":
+        return <SessionsManager sessions={sessions} fetchUserSessions={fetchUserSessions} />;
+      case "games":
+        return <GamesManager games={games}/>;
+      default:
+        return <SessionsManager />;
+    }
+  };
 
+  useEffect(() => {
+    fetchUserSessions();
+    fetchGames();
+  }, []);
+
+  const fetchUserSessions = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}gamesession/creator/${userData._id}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore nel recupero delle informazioni");
+      }
+
+      const sessionsdata = await response.json();
+      setSessions(sessionsdata);
+      console.log(sessions);
+    } catch (error) {
+      console.error("Errore nella chiamata al server: ", error);
+    }
+  };
+
+  const fetchGames = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}game`);
+      if (response.ok) {
+        const gamesData = await response.json();
+        setGames(gamesData);
+      } else {
+        throw new Error("Failed to fetch games");
+      }
+    } catch (error) {
+      console.error("Error fetching games:", error);
+    }
+  };
 
   return (
-    <Container className='mt-5'>
-        <Row>
-            <Col xs={12} md={4}>
-            <Card>
-            <CardHeader className="f-silkscreen text-center bg-blueviolet-light">
-              Pannello Utente
-            </CardHeader>
-
-
-
-            {/* <Form className="m-2">
-              <Form.Group controlId="formUserEmail" className="m-1">
-                <Form.Label className="f-silkscreen">Email</Form.Label>
-                <Form.Control
-                  value={email}
-                  required
-                  disabled
-                />
-              </Form.Group>
-
-              <Form.Group controlId="formUserName" className="m-1">
-                <Form.Label className="f-silkscreen">Nome</Form.Label>
-                <Form.Control
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="formUserSurname" className="m-1">
-                <Form.Label className="f-silkscreen">Cognome</Form.Label>
-                <Form.Control
-                  value={surname}
-                  onChange={(e) => setSurname(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="formUserPassword" className="m-1">
-                <Form.Label className="f-silkscreen">Password</Form.Label>
-                <Form.Control
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="formUserAvatar" className="m-1">
-                <Form.Label className="f-silkscreen">Avatar</Form.Label>
-                <Form.Control
-                  size="md"
-                  type="file"
-                  
-                  onChange={handleAvatarChange}
-                />
-              </Form.Group>
-
-              <div className="d-flex justify-content-center">
-                <Button
-                  variant="outline-success"
-                  type="submit"
-                  className="my-3"
-                >
-                  <span className="f-silkscreen">Register</span>
-                </Button>
-              </div>
-            </Form> */}
-            
-          </Card>
-
-            </Col>
-            <Col xs={12} md={8}>
-            </Col>
-        </Row>
+    <Container style={{ marginTop: "100px" }}>
+      <Row>
+        <Col xs={12} md={3}>
+          <UserCard user={userData} />
+        </Col>
+        <Col xs={12} md={9}>
+          <Stack direction="horizontal" gap={2} className="mb-3">
+          <Button
+              className="btn-blueviolet f-silkscreen"
+              variant="primary"
+              onClick={() => setSelectedSection("managesessions")}
+            >
+              Sessioni
+            </Button>
+            <Button
+              className="btn-blueviolet f-silkscreen"
+              variant="primary"
+              onClick={() => setSelectedSection("createsession")}
+            >
+              Nuova Sessione
+            </Button>
+            <Button
+              className="btn-blueviolet f-silkscreen"
+              variant="primary"
+              onClick={() => setSelectedSection("games")}
+            >
+              Giochi
+            </Button>
+          </Stack>
+          {renderSection()}
+        </Col>
+      </Row>
     </Container>
-  )
+  );
 }

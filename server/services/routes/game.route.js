@@ -2,11 +2,8 @@ import { Router } from "express";
 import { authMid } from "../auth/index.js";
 import Game from "../models/game.model.js";
 
-import { uploadCover } from "../middlewares/multer.js";
-
 export const gameRoute = Router();
 
-// DA RIVEDERE TUTTO
 
 // Route POST per creare un nuovo gioco
 gameRoute.post("/", authMid, async (req, res, next) => {

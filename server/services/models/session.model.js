@@ -37,11 +37,9 @@ const sessionSchema = new Schema(
     },
     players: [
       {
-        user: {
           type: Schema.Types.ObjectId,
           ref: 'User',
           required: false,
-        },
       },
     ],
   },

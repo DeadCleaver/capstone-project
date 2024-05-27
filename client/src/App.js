@@ -5,10 +5,11 @@ import Register from "./views/register/Register";
 import { useEffect, useState } from "react";
 import SessionDetails from "./views/sessiondetails/SessionDetails";
 import UserContextProvider from "./context/UserContextProvider";
-import "./styles.css"
+import UserPanel from "./views/user-panel/UserPanel";
 
 function App() {
-  const [sessions, setSessions] = useState([]);
+  /* const [sessions, setSessions] = useState([]);
+
 
   useEffect(() => {
     fetchSessions();
@@ -27,7 +28,7 @@ function App() {
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
     }
-  };
+  }; */
 
   return (
     <div>
@@ -36,11 +37,13 @@ function App() {
           <GameNav />
           <Routes>
             <Route path="/register" element={<Register />} />
-            <Route path="/" exact element={<Home sessions={sessions} />} />
+            <Route path="/" exact element={<Home />} />
             <Route
               path="/gamesession/:id"
-              element={<SessionDetails sessions={sessions} />}
+              element={<SessionDetails />}
             />
+            <Route path="/profile" exact element={<UserPanel />} />
+
           </Routes>
         </Router>
       </UserContextProvider>

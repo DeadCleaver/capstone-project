@@ -9,7 +9,7 @@ export const sessionRoute = Router();
 /* chiamata GET tutti le sessioni presenti a sistema */
 sessionRoute.get("/", async (req, res, next) => {
   try {
-    const sessions = await Session.find().populate(`creator`);
+    const sessions = await Session.find().populate(`creator`).populate(`players`);
     res.json(sessions);
   } catch (err) {
     next(err);
@@ -33,8 +33,18 @@ sessionRoute.post("/", authMid, async (req, res, next) => {
 /* chiamata GET di una singola sessione */
 sessionRoute.get("/:id", async (req, res, next) => {
   try {
-    let post = await Session.findById(req.params.id).populate(`creator`);
+    let post = await Session.findById(req.params.id).populate(`creator`).populate(`players`);
     res.send(post);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// chiamata GET di tutte le sessioni di uno specifico giocatore
+sessionRoute.get("/creator/:creatorId", async (req, res, next) => {
+  try {
+    const sessions = await Session.find({ creator: req.params.creatorId }).populate(`creator`).populate(`players`);
+    res.json(sessions);
   } catch (err) {
     next(err);
   }
@@ -130,11 +140,28 @@ sessionRoute.post("/:sessionId/players", async (req, res, next) => {
     }
 
     // aggiungi il giocatore alla sessione
-    session.players.push({ user: user._id });
+    session.players.push(user._id);
     await session.save();
 
     res.status(200).send(session);
   } catch (err) {
+    next(err);
+  }
+});
+
+/* chiamata GET dei players di una sessione */
+sessionRoute.get("/:sessionId/players", async (req, res, next) => {
+  try {
+    let sessionPlayers = await Session.findById(req.params.sessionId).select(`players`).populate(`players.user`);
+    res.send(sessionPlayers);
+
+    if (!sessionPlayers) {
+      const error = new Error('Non sono stati trovati giocatori');
+      error.status = 404;
+      throw error;
+    }
+
+  } catch (error) {
     next(err);
   }
 });

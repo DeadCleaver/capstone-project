@@ -3,9 +3,9 @@ import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SessionList from "../../components/session-list/SessionList"
 
-const Home = ({sessions}) => {
+const Home = () => {
     
-   /*  const [sessions, setSessions] = useState([]);
+    const [sessions, setSessions] = useState([]);
 
     useEffect(() => {
         fetchSessions();
@@ -26,7 +26,7 @@ const Home = ({sessions}) => {
           console.error("Errore nella chiamata al server: ", error);
         }
       };
- */
+
 
   return (
     <Container fluid="sm" style={{marginTop: "100px"}}>

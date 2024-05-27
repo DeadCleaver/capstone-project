@@ -138,13 +138,13 @@ export default function Register() {
                   onChange={handleAvatarChange}
                 />
               </Form.Group>
-
+              <div className="d-flex justify-content-center">
                 <Image
                   src={previewAvatar || staticAvatar}
                   alt="Avatar"
-                  className="avatar-img mt-1"
+                  className="avatar-img mt-1 rounded shadow"
                 />
-
+              </div>
 
               <div className="d-flex justify-content-center">
                 <Button

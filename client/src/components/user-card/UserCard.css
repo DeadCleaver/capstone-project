@@ -1,0 +1,14 @@
+.f-silkscreen {
+    font-family: 'Silkscreen';
+    font-size: 10pt;
+}
+
+.bg-blueviolet-light {
+    color: white !important;
+    background-color:  #9047ff !important;
+    font-weight: bold;
+}
+
+.user-profile-card {
+    border-color:  #9047ff !important;
+}

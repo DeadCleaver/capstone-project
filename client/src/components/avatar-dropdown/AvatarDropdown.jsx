@@ -39,7 +39,7 @@ export default function AvatarDropdown() {
       <Dropdown.Menu align="end">
         {userToken &&  
                 <div>
-                <Dropdown.Item>Profilo</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/profile">Profilo</Dropdown.Item>
                 <Dropdown.Item>Sessioni</Dropdown.Item>
                 <Dropdown.Item>Giochi</Dropdown.Item>
                 <hr />
