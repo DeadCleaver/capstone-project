@@ -20,20 +20,20 @@ export default function SessionCard(session) {
             <Card.Title className="fs-5 m-0 mb-1" style={{ color: "white" }}>
               {title}
             </Card.Title>
-            <div className="author-box">
-            <Author {...creator} />
+            <div className="author-box text-white">
+            <Author {...creator}/>
             </div>
         </Card.ImgOverlay>
-        <Card.Footer className="f-silkscreen bg-blueviolet">
+        <Card.Footer className="f-silkscreen bg-blueviolet f-s-10 text-white">
           <Row className="mb-2">
             <Col xs={6}>
-              <strong className="f-silkscreen">Data:</strong>
+              <strong >Data:</strong>
             </Col>
             <Col xs={6}>{formattedDate}</Col>
           </Row>
           <Row className="mb-2">
             <Col xs={6}>
-              <strong className="f-silkscreen">Giocatori:</strong>
+              <strong >Giocatori:</strong>
             </Col>
             <Col xs={6}>{`${players ? players.length : 0}/${maxplayers}`}</Col>
           </Row>

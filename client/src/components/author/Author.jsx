@@ -4,10 +4,14 @@ import "./Author.css";
 
 const Author = (props) => {
   const { name, surname, avatar } = props;
+
+  const staticAvatar =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+
   return (
     <Row>
       <Col xs={"auto"} className="pe-0">
-        <Image className="author-avatar" src={avatar} roundedCircle />
+        <Image className="author-avatar shadow" src={avatar || staticAvatar} roundedCircle />
       </Col>
       <Col>
         <div className="my-auto">

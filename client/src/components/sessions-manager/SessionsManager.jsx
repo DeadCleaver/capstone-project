@@ -3,15 +3,15 @@ import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import SessionCard from "../session-card/SessionCard";
 import { UserContext } from "../../context/UserContextProvider";
 import PlayersList from "../players-list/PlayersList";
+import { IoIosCloseCircle } from "react-icons/io";
 
-export default function SessionsManager({sessions, fetchUserSessions}) {
-
+export default function SessionsManager({ sessions, fetchUserSessions }) {
   const { userToken, userData } = useContext(UserContext);
 
   useEffect(() => {
     fetchUserSessions();
-  }, [])
-  
+  }, []);
+
   const handleDeleteSession = async (sessionId) => {
     try {
       const response = await fetch(
@@ -34,8 +34,6 @@ export default function SessionsManager({sessions, fetchUserSessions}) {
         }
       }
 
-      /* setSessions(sessions.filter((session) => session._id !== sessionId)); */
-
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
     }
@@ -44,22 +42,27 @@ export default function SessionsManager({sessions, fetchUserSessions}) {
   return (
     <Container>
       {sessions.map((session, index) => (
-        <Row key={session._id} className="mb-4">
-          <Col xs={4}>
+        <Row key={session._id} className="my-2">
+          <Col xs={12} md={6}>
             <SessionCard {...session} />
           </Col>
-          <Col xs={8}>
-            <Stack direction="horizontal" gap={2} className="mb-3">
+          <Col xs={12} md={6}>
+            <Stack direction="horizontal" gap={2} className="mb-2">
               <Button
-                className="btn-blueviolet f-silkscreen"
-                variant="primary"
+                className="f-silkscreen f-s-8"
+                variant="danger"
                 size="sm"
                 onClick={() => handleDeleteSession(session._id)} // Attach the delete function here
               >
+                <span className="me-2">
+                  <IoIosCloseCircle />
+                </span>
                 Elimina Sessione
               </Button>
             </Stack>
-            {session.players && <PlayersList players={session.players}/>}
+            {session.players && (
+              <PlayersList players={session.players} isCreator={true} />
+            )}
           </Col>
         </Row>
       ))}

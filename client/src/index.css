@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  background-color: rgb(232, 229, 229);
+  background-color: rgb(207, 203, 213);
   font-family: "Alegreya", serif;
 }
 
@@ -13,4 +13,34 @@ code {
     monospace;
 }
 
+.f-silkscreen {
+  font-family: "Silkscreen", sans-serif;
+}
 
+.bg-blueviolet {
+  background-color:  #9047ff !important;
+}
+
+.bg-blueviolet-dark {
+  background-color: #5b17c4 !important;
+}
+
+.border-blueviolet {
+  border-color: #9047ff !important;
+}
+
+.border-white {
+  border-color: whitesmoke !important;
+}
+
+.bg-darkslate {
+  background-color:  #303338;
+}
+
+.f-s-10 {
+  font-size: 10pt;
+}
+
+.f-s-8 {
+  font-size: 8pt;
+}

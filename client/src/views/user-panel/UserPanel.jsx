@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Container, Row, Col, Button, Stack, Card } from "react-bootstrap";
-import UserCard from "../../components/user-card/UserCard";
 import "./UserPanel.css";
 import { UserContext } from "../../context/UserContextProvider";
 import SessionAdd from "../../components/session-add/SessionAdd";
@@ -31,6 +30,7 @@ export default function UserPanel({}) {
   useEffect(() => {
     fetchUserSessions();
     fetchGames();
+
   }, []);
 
   const fetchUserSessions = async () => {
@@ -67,11 +67,7 @@ export default function UserPanel({}) {
 
   return (
     <Container style={{ marginTop: "100px" }}>
-      <Row>
-        <Col xs={12} md={3}>
-          <UserCard user={userData} />
-        </Col>
-        <Col xs={12} md={9}>
+      
           <Stack direction="horizontal" gap={2} className="mb-3">
           <Button
               className="btn-blueviolet f-silkscreen"
@@ -96,8 +92,6 @@ export default function UserPanel({}) {
             </Button>
           </Stack>
           {renderSection()}
-        </Col>
-      </Row>
     </Container>
   );
 }

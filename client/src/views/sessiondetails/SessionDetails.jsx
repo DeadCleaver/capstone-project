@@ -1,43 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Stack,
+  Card,
+  CardHeader,
+  CardBody,
+  ListGroup
+} from "react-bootstrap";
 import Author from "../../components/author/Author";
 import { useParams, useNavigate } from "react-router-dom";
 import "./SessionDetails.css";
 import { format, formatDate } from "date-fns";
 import PlayersList from "../../components/players-list/PlayersList";
+import { UserContext } from "../../context/UserContextProvider";
 
 export default function SessionDetails() {
-
   const [session, setSession] = useState({});
   const [loading, setLoading] = useState(true); // mettere lo spinner
-
+  const [isCreator, setIsCreator] = useState(false);
+  const { userData } = useContext(UserContext);
 
   const params = useParams();
   const navigate = useNavigate();
 
-  // da eliminare
-  /* useEffect(() => {
-    const { id } = params;
-    const session = sessions.find((session) => session._id.toString() === id);
-
-    if (session) {
-      setSession(session);
-      setLoading(false);
-    } else {
-      navigate("/");
-      alert("Blog post Rimosso o non presente");
-    }
-  }, []); */
-
   useEffect(() => {
     fetchSession();
+
   }, []);
 
   const fetchSession = async () => {
     const { id } = params;
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}gamesession/${id}`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API}gamesession/${id}`
+      );
 
       if (!response.ok) {
         throw new Error("Errore nel recupero delle informazioni");
@@ -46,8 +46,10 @@ export default function SessionDetails() {
       const sessiondata = await response.json();
       setSession(sessiondata);
 
-      setLoading(false);
+   
 
+
+      setLoading(false);
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
     }
@@ -60,8 +62,11 @@ export default function SessionDetails() {
 
   return (
     <Container className="session-details-container">
-      <Row>
-        <Col xs={12} md={7}>
+      <Stack direction="vertical" className="align-items-center" gap={1}>
+        <h1 className="mb-3 fw-bold fs-1">{session.title}</h1>
+      </Stack>
+      <Row className="g-2">
+        <Col xs={12} xl={7}>
           <Image
             src={session.cover}
             fluid
@@ -69,23 +74,33 @@ export default function SessionDetails() {
           />
         </Col>
 
-        <Col xs={12} md={5}>
-          <Container className="mt-auto">
-            <h1 className="session-details-title mb-5">{session.title}</h1>
-            <div>
-              <h6 className="mb-3">{`Giorno della sessione: ${formatDate(
-                session.date
-              )}`}</h6>
-              <h6 className="mb-3">{`Giocatori:   ${
-                session.players ? session.players.length : 0
-              } / ${session.maxplayers}`}</h6>
-              <hr style={{ color: "#5b17c4" }} />
-              <p className="mb-3">{session.description}</p>
-            </div>
-          </Container>
-          <Container>
-            {session.players && <PlayersList players={session.players} />}
-          </Container>
+        <Col xs={12} xl={5}>
+          <Stack direction="vertical" gap={2}>
+            <Card className="border-blueviolet">
+              <CardHeader className="text-white f-silkscreen bg-blueviolet">
+                <Stack
+                  direction="horizontal"
+                  gap={2}
+                  className="justify-content-between"
+                >
+                  <h6 className="m-0 f-s-10">{`Data: ${formatDate(
+                    session.date
+                  )}`}</h6>
+                  <h6 className="m-0 f-s-10">{`Giocatori: ${
+                    session.players ? session.players.length : 0
+                  }/${session.maxplayers} (minimo ${session.minplayers})`}</h6>
+                </Stack>
+              </CardHeader>
+              <CardBody>
+                {session.description}
+                <ListGroup className="list-group-flush mt-2">
+                  <ListGroup.Item><strong>Gioco: </strong>{session.game && session.game.gametitle}</ListGroup.Item>
+                  <ListGroup.Item>{session.game && session.game.gamedescription}</ListGroup.Item>
+                </ListGroup>
+              </CardBody>
+            </Card>
+            {session.players && <PlayersList players={session.players} isCreator={(userData && (session.creator._id === userData._id)) ? true : false} />}
+          </Stack>
         </Col>
       </Row>
     </Container>

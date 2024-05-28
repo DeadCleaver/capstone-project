@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import SessionDetails from "./views/sessiondetails/SessionDetails";
 import UserContextProvider from "./context/UserContextProvider";
 import UserPanel from "./views/user-panel/UserPanel";
+import Profile from "./views/profile/Profile";
 
 function App() {
   /* const [sessions, setSessions] = useState([]);
@@ -42,7 +43,9 @@ function App() {
               path="/gamesession/:id"
               element={<SessionDetails />}
             />
-            <Route path="/profile" exact element={<UserPanel />} />
+            <Route path="/profile" exact element={<Profile />} />
+            <Route path="/sessions" exact element={<UserPanel />} />
+
 
           </Routes>
         </Router>

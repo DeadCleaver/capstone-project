@@ -1,18 +1,3 @@
-.f-silkscreen {
-    font-family: 'Silkscreen' !important;
-    font-size: 10pt;
-}
-
-.bg-blueviolet-light {
-    color: white !important;
-    background-color:  #9047ff !important;
-    font-weight: bold;
-}
-
-.border-blueviolet {
-    border-color: #9047ff !important;
-}
-
 .btn-blueviolet {
     font-family: 'Silkscreen' !important;
     font-weight: bold !important;

@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Form,
+  InputGroup,
+  ModalHeader,
+  ModalFooter,
+} from "react-bootstrap";
 import { UserContext } from "../../context/UserContextProvider";
+import InputGroupText from "react-bootstrap/esm/InputGroupText";
 
-const LoginModal = ({ show, setShow, userLogin }) => {
+const LoginModal = ({ show, setShow }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUserToken } = useContext(UserContext);
-
 
   useEffect(() => {
     setShow(show);
@@ -43,7 +50,7 @@ const LoginModal = ({ show, setShow, userLogin }) => {
         alert("Login eseguito correttamente");
       } else {
         console.error("Login fallito");
-        alert("Login Fallito")
+        alert("Login Fallito");
       }
     } catch (error) {
       console.error("Errore nel login:", error);
@@ -56,28 +63,37 @@ const LoginModal = ({ show, setShow, userLogin }) => {
 
   return (
     <Modal show={show} onHide={toggleShowLogin}>
-      <Modal.Header closeButton>
-        <Modal.Title>Log in</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+      <ModalHeader
+        closeButton
+        className="f-s-8 bg-darkslate f-silkscreen text-white fw-bold"
+      >
+        Log In
+      </ModalHeader>
+      <Modal.Body className="bg-darkslate">
         <Form>
           <Form.Group controlId="form-user-email">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              placeholder="Inserisci l'email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <InputGroup className="mb-2 border-blueviolet">
+              <InputGroupText className="f-silkscreen text-black bg-white">
+                Email
+              </InputGroupText>
+              <Form.Control
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputGroup>
           </Form.Group>
 
           <Form.Group controlId="form-user-password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Inserisci la password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <InputGroup>
+              <InputGroupText className="f-silkscreen text-black bg-white">
+                Pass
+              </InputGroupText>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </InputGroup>
           </Form.Group>
         </Form>
         {/* <hr />
@@ -85,14 +101,24 @@ const LoginModal = ({ show, setShow, userLogin }) => {
           <GoogleLogin />
         </div> */}
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={toggleShowLogin}>
-          Close
+      <ModalFooter className="p-1 bg-darkslate">
+        <Button
+          size="sm"
+          variant="danger"
+          className="f-silkscreen border-white"
+          onClick={toggleShowLogin}
+        >
+          Chiudi
         </Button>
-        <Button variant="primary" onClick={() => handleLogin(email, password)}>
+        <Button
+          size="sm"
+          variant="success"
+          className="f-silkscreen border-white"
+          onClick={() => handleLogin(email, password)}
+        >
           Log in
         </Button>
-      </Modal.Footer>
+      </ModalFooter>
     </Modal>
   );
 };

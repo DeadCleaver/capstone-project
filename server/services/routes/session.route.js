@@ -33,7 +33,7 @@ sessionRoute.post("/", authMid, async (req, res, next) => {
 /* chiamata GET di una singola sessione */
 sessionRoute.get("/:id", async (req, res, next) => {
   try {
-    let post = await Session.findById(req.params.id).populate(`creator`).populate(`players`);
+    let post = await Session.findById(req.params.id).populate(`creator`).populate(`players`).populate(`game`);
     res.send(post);
   } catch (err) {
     next(err);
