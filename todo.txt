@@ -1,5 +1,9 @@
 - Sistemare stile
 - Fare "not found"
+- Sistemare footer
+- Modifica sessione
+- Modifica profilo
+- Gestire gestione errata add giocatori
 - Aggiungere spinner di caricamento
 - Sistemare errori
 - emailsender per memo giocatori

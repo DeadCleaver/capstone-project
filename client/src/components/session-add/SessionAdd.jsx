@@ -3,9 +3,10 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { UserContext } from "../../context/UserContextProvider";
 import "./SessionAdd.css";
 
-export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
+export default function SessionAdd({}) {
   const { userData, userToken } = useContext(UserContext);
   const [sessionCover, setSessionCover] = useState(null);
+  const [games, setGames] = useState([]);
 
   // gestione dei dati tutti insieme
   const [formData, setFormData] = useState({
@@ -24,11 +25,11 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
 
 
   // caricamento della lista giochi - DA SPOSTARE ALTROVE
-  /* useEffect(() => {
+  useEffect(() => {
     fetchGames();
-  }, []); */
+  }, []);
 
-  /* const fetchGames = async () => {
+  const fetchGames = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API}game`);
       if (response.ok) {
@@ -40,7 +41,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
     } catch (error) {
       console.error("Error fetching games:", error);
     }
-  }; */
+  };
 
   // Aggiunta della sessione
   const handleAddSession = async (e) => {
@@ -66,9 +67,8 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
           await uploadSessionCover(_id, sessionCover); 
         }
   
-        fetchUserSessions();
-        fetchSessions();
-        window.location.href = "/profile";
+
+        window.location.href = "/sessions";
       } else {
 
         console.error("Failed to add session");
@@ -110,7 +110,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
       <Form>
 
         <Form.Group className="mb-3" controlId="title">
-          <Form.Label>Titolo della sessione</Form.Label>
+          <Form.Label className="f-silkscreen">Titolo della sessione</Form.Label>
           <Form.Control
             type="text"
             name="title"
@@ -126,8 +126,8 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
           name="game"
           value={formData.game}
           onChange={(e) => {
-            const gameId = e.target.value; // Ottieni l'id del gioco selezionato
-            setFormData({ ...formData, game: gameId }); // Memorizza l'id del gioco nello stato formData
+            const gameId = e.target.value; 
+            setFormData({ ...formData, game: gameId }); 
           }}
           required
         >
@@ -141,7 +141,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Descrizione</Form.Label>
+          <Form.Label className="f-silkscreen">Descrizione</Form.Label>
           <Form.Control
             as="textarea"
             name="description"
@@ -154,7 +154,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
         <Row>
           <Col xs={6}>
             <Form.Group className="mb-3" controlId="date">
-              <Form.Label>Giorno</Form.Label>
+              <Form.Label className="f-silkscreen">Giorno</Form.Label>
               <Form.Control
                 type="date"
                 name="date"
@@ -166,7 +166,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
           </Col>
           <Col xs={6}>
             <Form.Group className="mb-3" controlId="cover">
-              <Form.Label>Immagine di Copertina</Form.Label>
+              <Form.Label className="f-silkscreen">Immagine di Copertina</Form.Label>
               <Form.Control
                 size="md"
                 type="file"
@@ -179,7 +179,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
         <Row>
           <Col xs={6}>
             <Form.Group className="mb-3" controlId="maxplayers">
-              <Form.Label>Numero massimo Giocatori</Form.Label>
+              <Form.Label className="f-silkscreen">Numero massimo Giocatori</Form.Label>
               <Form.Control
                 type="number"
                 name="maxplayers"
@@ -192,7 +192,7 @@ export default function SessionAdd({games, fetchUserSessions, fetchSessions}) {
           </Col>
           <Col xs={6}>
             <Form.Group className="mb-3" controlId="minplayers">
-              <Form.Label>Numero Minimo Giocatori</Form.Label>
+              <Form.Label className="f-silkscreen">Numero Minimo Giocatori</Form.Label>
               <Form.Control
                 type="number"
                 name="minplayers"

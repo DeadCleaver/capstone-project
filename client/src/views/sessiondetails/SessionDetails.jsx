@@ -99,7 +99,7 @@ export default function SessionDetails() {
                 </ListGroup>
               </CardBody>
             </Card>
-            {session.players && <PlayersList players={session.players} isCreator={(userData && (session.creator._id === userData._id)) ? true : false} />}
+            {session.players && <PlayersList players={session.players} isCreator={(userData && (session.creator._id === userData._id)) ? true : false} sessionId={session._id} refresh={fetchSession}/>}
           </Stack>
         </Col>
       </Row>

@@ -149,6 +149,32 @@ sessionRoute.post("/:sessionId/players", async (req, res, next) => {
   }
 });
 
+
+/* rimozione giocatore */
+sessionRoute.delete("/:sessionId/players/:playerId", async (req, res, next) => {
+  try {
+
+    let session = await Session.findById(req.params.sessionId);
+
+    if (!session) {
+      return res.status(404).send("Sessione non trovata");
+    }
+
+    const playerIndex = session.players.indexOf(req.params.playerId);
+    if (playerIndex === -1) {
+      return res.status(404).send("Giocatore non presente");
+    }
+
+    session.players.splice(playerIndex, 1);
+
+    await session.save();
+
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+});
+
 /* chiamata GET dei players di una sessione */
 sessionRoute.get("/:sessionId/players", async (req, res, next) => {
   try {
@@ -166,8 +192,8 @@ sessionRoute.get("/:sessionId/players", async (req, res, next) => {
   }
 });
 
-/* rimozione giocatore */
-sessionRoute.delete(
+
+/* sessionRoute.delete(
   "/:sessionId/players/:playerId",
   authMid,
   async (req, res, next) => {
@@ -180,7 +206,7 @@ sessionRoute.delete(
         return res.status(404).send("Sessione non trovata");
       }
 
-      if (req.user._id.toString() !== session.creator.toString()) {
+      if (req.user._id !== session.creator._id) {
         return res
           .status(403)
           .send("Solo il creatore della sessione può rimuovere giocatori");
@@ -198,4 +224,30 @@ sessionRoute.delete(
       next(err);
     }
   }
-);
+); */
+
+/* sessionRoute.delete(
+  "/:sessionId/players/:playerId",
+  async (req, res, next) => {
+    const { sessionId, playerId } = req.params;
+
+    try {
+      const session = await Session.findById(sessionId);
+
+      if (!session) {
+        return res.status(404).send("Sessione non trovata");
+      }
+
+      // Rimuovi il giocatore dalla sessione filtrando ed escludendo se uguale a playerId
+      session.players = session.players.filter(
+        (player) => player.user.toString() !== playerId
+      );
+
+      await session.save();
+
+      return res.status(200).send(session);
+    } catch (err) {
+      next(err);
+    }
+  }
+); */

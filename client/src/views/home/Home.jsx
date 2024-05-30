@@ -2,6 +2,7 @@ import React, {useState, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SessionList from "../../components/session-list/SessionList"
+import SessionCarousel from "../../components/session-carousel/SessionCarousel";
 
 const Home = () => {
     
@@ -30,6 +31,7 @@ const Home = () => {
 
   return (
     <Container fluid="sm" style={{marginTop: "100px"}}>
+      {/* <SessionCarousel sessions={sessions}/> */}
       <SessionList sessions={sessions} />
     </Container>
   );
