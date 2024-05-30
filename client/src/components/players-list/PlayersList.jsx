@@ -5,10 +5,21 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { UserContext } from "../../context/UserContextProvider";
 import AddPlayer from "../add-player/AddPlayer";
 
-export default function PlayersList({ players, isCreator, sessionId, refresh }) {
+export default function PlayersList({
+  players,
+  isCreator,
+  sessionId,
+  refresh,
+  open,
+}) {
   const { userData, userToken } = useContext(UserContext);
 
   const handleDeletePlayer = async (playerId) => {
+    const confirmed = window.confirm(
+      "Sei sicuro di voler rimuovere il giocatore?"
+    );
+    if (!confirmed) return;
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API}gamesession/${sessionId}/players/${playerId}`,
@@ -21,9 +32,7 @@ export default function PlayersList({ players, isCreator, sessionId, refresh }) 
         throw new Error("Errore durante l'eliminazione del giocatore");
       }
 
-
       refresh();
-
     } catch (error) {
       console.error("Errore durante l'eliminazione del giocatore: ", error);
     }
@@ -52,7 +61,7 @@ export default function PlayersList({ players, isCreator, sessionId, refresh }) 
             )}
           </Stack>
         ))}
-      <AddPlayer sessionId={sessionId} refresh={refresh} />
+      {open && <AddPlayer sessionId={sessionId} refresh={refresh} />}
     </Card>
   );
 }

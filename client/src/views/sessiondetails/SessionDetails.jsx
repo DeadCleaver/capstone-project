@@ -46,9 +46,6 @@ export default function SessionDetails() {
       const sessiondata = await response.json();
       setSession(sessiondata);
 
-   
-
-
       setLoading(false);
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
@@ -99,7 +96,7 @@ export default function SessionDetails() {
                 </ListGroup>
               </CardBody>
             </Card>
-            {session.players && <PlayersList players={session.players} isCreator={(userData && (session.creator._id === userData._id)) ? true : false} sessionId={session._id} refresh={fetchSession}/>}
+            {session.players && <PlayersList players={session.players} isCreator={(userData && (session.creator._id === userData._id)) ? true : false} sessionId={session._id} refresh={fetchSession} open={session.players.length < session.maxplayers}/>}
           </Stack>
         </Col>
       </Row>

@@ -4,6 +4,8 @@ import SessionCard from "../session-card/SessionCard"
 
 const SessionList = ({sessions}) => {
 
+
+
   return (
     <Container>
     <Row>

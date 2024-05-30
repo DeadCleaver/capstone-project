@@ -49,10 +49,14 @@ function App() {
               path="/gamesession/:id"
               element={<SessionDetails />}
             />
+
+            {/* Route da proteggere */}
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/sessions" exact element={<SessionsManager />} />
             <Route path="/games" exact element={<GamesManager />} />
-            <Route path="/session" exact element={<SessionEditor />} />
+            <Route path="/session" element={<SessionEditor />} />
+            <Route path="/session/:sessionId" element={<SessionEditor />} />
+
 
 
           </Routes>

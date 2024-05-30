@@ -6,6 +6,7 @@ import PlayersList from "../../components/players-list/PlayersList";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaPen } from "react-icons/fa";
 import AddPlayer from "../../components/add-player/AddPlayer";
+import { Link } from "react-router-dom";
 
 export default function SessionsManager() {
   const { userToken, userData } = useContext(UserContext);
@@ -41,6 +42,9 @@ export default function SessionsManager() {
   };
 
   const handleDeleteSession = async (sessionId) => {
+    const confirmed = window.confirm("Sei sicuro di voler cancellare questa sessione?");
+    if (!confirmed) return;
+  
 
     try {
       const response = await fetch(
@@ -69,6 +73,9 @@ export default function SessionsManager() {
       console.error("Errore nella chiamata al server: ", error);
     }
   };
+
+
+  
 
   if (loading) {
     return    <Spinner animation="border" variant="primary" />
@@ -101,6 +108,7 @@ export default function SessionsManager() {
                   className="f-silkscreen f-s-10 text-white border-white"
                   variant="warning"
                   size="sm"
+                  as={Link} to={`/session/${session._id}`}
                 >
                   <span className="me-2">
                     <FaPen />
@@ -112,7 +120,7 @@ export default function SessionsManager() {
           </Col>
           <Col sm={12} lg={5}>
             {session.players && (
-              <PlayersList players={session.players} isCreator={true} sessionId={session._id} refresh={fetchUserSessions} />
+              <PlayersList players={session.players} isCreator={true} sessionId={session._id} refresh={fetchUserSessions} open={session.players.length < session.maxplayers}/>
             )}
           </Col>
         </Row>
