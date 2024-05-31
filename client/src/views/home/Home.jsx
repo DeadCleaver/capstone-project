@@ -106,7 +106,7 @@ const Home = () => {
 
   return (
     <Container fluid="sm" style={{ marginTop: "90px" }}>
-      <Stack className="mb-3 bg-darkslate border border-white rounded p-3 ">
+      <Stack className="mb-3 bg-blueviolet-dark border border-white rounded p-2">
         <Form className="text-white">
           <Row>
             <Col xs={1}>
