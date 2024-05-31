@@ -16,10 +16,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-
     const upcoming = sessions.filter(
-      (session) =>
-        new Date(session.date) >= new Date() 
+      (session) => new Date(session.date) >= new Date()
     );
 
     setUpcomingSessions(upcoming);
@@ -29,7 +27,6 @@ const Home = () => {
     );
 
     setPassedSessions(passed);
-
   }, [sessions]);
 
   const fetchSessions = async () => {
@@ -45,7 +42,6 @@ const Home = () => {
       const sessionsdata = await response.json();
       setSessions(sessionsdata);
       setLoading(false);
-
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
     }
@@ -64,7 +60,10 @@ const Home = () => {
 
   return (
     <Container fluid="sm" style={{ marginTop: "100px" }}>
-      {/* <SessionCarousel sessions={sessions}/> */}
+      <Stack className="mb-2 bg-secondary border border-white">
+        
+      </Stack>
+
       <Stack className="mb-2">
         <h2 className="text-center">Sessioni Disponibli</h2>
       </Stack>

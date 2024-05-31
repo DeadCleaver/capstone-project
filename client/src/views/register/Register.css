@@ -2,19 +2,9 @@
     margin-top: 100px;
 }
 
-.f-silkscreen {
-    font-family: "Silkscreen";
-}
-
-.bg-blueviolet-light {
-    color: white !important;
-    background-color:  #9047ff !important;
-    font-weight: bold;
-}
-
 .avatar-img {
-    width: 450px;
-    height: 450px;
+    width: 500px;
+    height: 500px;
     object-fit: cover;
     object-position: 0% 0%;
 }

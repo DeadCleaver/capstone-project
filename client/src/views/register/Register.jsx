@@ -86,11 +86,11 @@ export default function Register() {
   };
 
   return (
-    <Container className="register-container">
+    <Container style={{marginTop: "100px"}} className="mb-5">
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
-          <Card>
-            <CardHeader className="f-silkscreen text-center bg-blueviolet-light">
+          <Card className="border-blueviolet">
+            <CardHeader className="f-silkscreen text-center bg-blueviolet text-white">
               Registrati
             </CardHeader>
             <Form onSubmit={handleRegister} className="m-2">
@@ -142,7 +142,7 @@ export default function Register() {
                 <Image
                   src={previewAvatar || staticAvatar}
                   alt="Avatar"
-                  className="avatar-img mt-1 rounded shadow"
+                  className="avatar-img mt-1 rounded"
                 />
               </div>
 

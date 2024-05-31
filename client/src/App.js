@@ -12,6 +12,7 @@ import GameFooter from "./components/game-footer/GameFooter";
 import SessionEditor from "./views/session-editor/SessionEditor";
 import ProtectedAuthRoute from "./context/ProtectedAuthRoute";
 import NotFound from "./views/notfound/NotFound";
+import VerifyGoogleLogin from "./components/google-login/VerifyGoogleLogin"
 
 function App() {
   /* const [sessions, setSessions] = useState([]);
@@ -38,36 +39,34 @@ function App() {
 
   return (
     <div>
-
       <UserContextProvider>
         <Router>
-        <div id="root">
-          <div className="app-container">
-          <GameNav />
-          <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/" exact element={<Home />} />
-            <Route
-              path="/gamesession/:id"
-              element={<SessionDetails />}
-            />
+          <div id="root">
+            <div className="app-container">
+              <GameNav />
+              <Routes>
+                <Route path="/register" element={<Register />} />
+                <Route path="/" exact element={<Home />} />
+                <Route path="/gamesession/:id" element={<SessionDetails />} />
 
-            {/* Route da proteggere */}
-            <Route element={<ProtectedAuthRoute />}>
+                <Route path="/verifylogin" element={<VerifyGoogleLogin />} />
 
-            <Route path="/profile" exact element={<Profile />} />
-            <Route path="/sessions" exact element={<SessionsManager />} />
-            <Route path="/games" exact element={<GamesManager />} />
-            <Route path="/session" element={<SessionEditor />} />
-            <Route path="/session/:sessionId" element={<SessionEditor />} />
-            
-            </Route>
+                {/* Route da proteggere */}
+                <Route element={<ProtectedAuthRoute />}>
+                  <Route path="/profile" exact element={<Profile />} />
+                  <Route path="/sessions" exact element={<SessionsManager />} />
+                  <Route path="/games" exact element={<GamesManager />} />
+                  <Route path="/session" element={<SessionEditor />} />
+                  <Route
+                    path="/session/:sessionId"
+                    element={<SessionEditor />}
+                  />
+                </Route>
 
-            <Route path="/*" element={<NotFound />} />
-
-          </Routes>
-          </div>
-          <GameFooter />
+                <Route path="/*" element={<NotFound />} />
+              </Routes>
+            </div>
+            <GameFooter />
           </div>
         </Router>
       </UserContextProvider>

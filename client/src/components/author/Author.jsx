@@ -11,7 +11,7 @@ const Author = (props) => {
   return (
     <Row>
       <Col xs={"auto"} className="pe-0">
-        <Image className="author-avatar shadow" src={avatar || staticAvatar} roundedCircle />
+        <Image className="author-avatar" src={avatar || staticAvatar} roundedCircle />
       </Col>
       <Col>
         <div className="my-auto">

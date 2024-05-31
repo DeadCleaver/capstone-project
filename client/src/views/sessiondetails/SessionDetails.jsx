@@ -29,7 +29,7 @@ export default function SessionDetails() {
   }, []);
 
   const fetchSession = async () => {
-    
+
     setLoading(true);
     const { id } = params;
 
@@ -68,7 +68,7 @@ export default function SessionDetails() {
   }
 
   return (
-    <Container className="session-details-container">
+    <Container className="session-details-container mb-5">
       <Stack direction="vertical" className="align-items-center" gap={1}>
         <h1 className="mb-3 fw-bold fs-1">{session.title}</h1>
       </Stack>

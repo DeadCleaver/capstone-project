@@ -135,12 +135,12 @@ export default function SessionAdd({ editSessionId }) {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to add session cover image");
+        throw new Error("Caricamento immagine non riuscito");
       }
 
-      alert("Session cover image added successfully");
+      alert("Immagine cover aggiunta correttamente");
     } catch (error) {
-      console.error("Error adding session cover image:", error);
+      console.error("Caricamento immagine non riuscito:", error);
     }
   };
 

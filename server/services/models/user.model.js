@@ -23,6 +23,10 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    googleid: {
+      type: String,
+      required: false
+    }
   },
   {
     collection: "users",

@@ -9,7 +9,7 @@ export const sessionRoute = Router();
 /* chiamata GET tutti le sessioni presenti a sistema */
 sessionRoute.get("/", async (req, res, next) => {
   try {
-    const sessions = await Session.find().populate(`creator`).populate(`players`);
+    const sessions = await Session.find().populate(`creator`).populate(`players`).populate('game');
     res.json(sessions);
   } catch (err) {
     next(err);
@@ -43,7 +43,7 @@ sessionRoute.get("/:id", async (req, res, next) => {
 // chiamata GET di tutte le sessioni di uno specifico giocatore
 sessionRoute.get("/creator/:creatorId", async (req, res, next) => {
   try {
-    const sessions = await Session.find({ creator: req.params.creatorId }).populate(`creator`).populate(`players`);
+    const sessions = await Session.find({ creator: req.params.creatorId }).populate(`creator`).populate(`players`).populate(`game`);
     res.json(sessions);
   } catch (err) {
     next(err);

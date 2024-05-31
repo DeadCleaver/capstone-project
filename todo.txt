@@ -1,3 +1,5 @@
+- Funzione di ricerca
+- Luogo DELLA SESSIONE!
 - inserimento di giocatore che non corrisponde in perfezione all'utente già salvato nel DB // verifica doppioni, verifica esattezza dati giocatore rispetto a DB
 - Gestire gestione errata add giocatori
 √ protezione delle routes
@@ -7,14 +9,16 @@
 - Mettere conferma a eliminazione sessioni // da inserire ovunque
 - Anteprima immagini in modifica/aggiungi sessione
 - Modifica profilo (a parte)
-- Modifica password (patch della pass, verifica doppia password)
-- Google Login
-- Sistemare stile
-- Aggiungere spinner di caricamento
+√ Modifica password (patch della pass, verifica doppia password)
+√ Google Login
+√ Aggiungere spinner di caricamento
+
 - Sistemare errori
+- Sistemare stile
 - emailsender per memo giocatori
 - Problema degli user cancellati
 
+- googleOAUTH_API= AIzaSyDU2Rh4U-qbGDxrYDTG_O0EAnoKALrtXfo
 
 COLOR PALETTE
 Blueviolet - #9047ff

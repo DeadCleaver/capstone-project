@@ -7,6 +7,9 @@ import { authRoute } from "./services/routes/auth.route.js";
 import { unauthorizedHandler,badRequestHandler, notfoundHandler, genericErrorHandler } from "./services/middlewares/errorhandler.js";
 import gameRoute from "./services/routes/game.route.js";
 import cors from "cors";
+import passport from "passport";
+import googleStrategy from "./services/auth/passport.js"
+
 
 config();
 
@@ -16,7 +19,9 @@ const port = process.env.PORT || 3001;
 
 app.use(cors());
 
-app.use(express.json());
+app.use(express.json())
+
+passport.use("google", googleStrategy);
 
 app.use("/auth", authRoute)
 app.use("/user", userRoute);

@@ -5,10 +5,11 @@ import {
   Form,
   InputGroup,
   ModalHeader,
-  ModalFooter,
+  ModalFooter
 } from "react-bootstrap";
 import { UserContext } from "../../context/UserContextProvider";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
+import GoogleLogin from "../google-login/GoogleLogin";
 
 const LoginModal = ({ show, setShow }) => {
   const [email, setEmail] = useState("");
@@ -95,10 +96,11 @@ const LoginModal = ({ show, setShow }) => {
             </InputGroup>
           </Form.Group>
         </Form>
-        {/* <hr />
-        <div className="d-flex justify-content-center">
+        <hr />
+        <div className="d-flex flex-column align-items-center">
+          <div className="text-white mb-2">oppure</div>
           <GoogleLogin />
-        </div> */}
+        </div>
       </Modal.Body>
       <ModalFooter className="p-1 bg-darkslate">
         <Button

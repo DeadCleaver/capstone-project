@@ -59,6 +59,7 @@ export const authMid = async (req, res, next) => {
         res.status(401).send("Eddettua di nuovo il login");
       }
     }
+    
   } catch (err) {
     next(err);
   }

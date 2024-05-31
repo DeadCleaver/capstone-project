@@ -5,7 +5,7 @@ import { uploadAvatar } from "../middlewares/multer.js"; // fare una cartella a 
 
 export const userRoute = Router();
 
-/* crea un utente - SARÀ SOSTITUITO DALLA ROUTE /register */
+/* crea un utente - SOSTITUITO DALLA ROUTE /register */
 userRoute.post("/", async (req, res, next) => {
   try {
     let user = await User.create(req.body);
@@ -36,7 +36,7 @@ userRoute.get("/", async (req, res, next) => {
 });
 
 /* richiesta DELETE di un utente */
-// verifica che può deletare solo se stesso
+
 userRoute.delete("/:id", authMid, async (req, res, next) => {
   try {
     await User.deleteOne({
@@ -48,8 +48,8 @@ userRoute.delete("/:id", authMid, async (req, res, next) => {
   }
 });
 
-/* richiesta PUT di un singolo autore */
-// verifica che può deletare solo se stesso
+/* richiesta PUT di un utente */
+
 userRoute.put("/:id", authMid, async (req, res, next) => {
   try {
     let user = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -63,7 +63,7 @@ userRoute.put("/:id", authMid, async (req, res, next) => {
 
 /* IMMAGINI */
 
-/* richiesta PATCH per l'immagine avatar dell'autore */
+/* richiesta PATCH per l'immagine avatar dell'utente */
 userRoute.patch("/:id/avatar", uploadAvatar, async (req, res, next) => {
   try {
     let updatedUser = await User.findByIdAndUpdate(

@@ -119,7 +119,7 @@ export default function GamesManager() {
   }
 
   return (
-    <Container style={{ marginTop: "100px" }}>
+    <Container style={{ marginTop: "100px" }} className="mb-5">
       <Card className="border-blueviolet">
         <CardHeader className="bg-blueviolet text-center text-white f-silkscreen">
           Libreria Giochi
