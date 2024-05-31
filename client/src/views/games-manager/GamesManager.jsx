@@ -7,10 +7,9 @@ import {
   CardHeader,
   Form,
   InputGroup,
-  Row, 
-  Col
 } from "react-bootstrap";
 import { UserContext } from "../../context/UserContextProvider";
+import Loader from "../../components/loader/Loader";
 
 export default function GamesManager() {
   const [games, setGames] = useState([]);
@@ -19,6 +18,8 @@ export default function GamesManager() {
     gamedescription: "",
   });
   const { userToken } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+
 
   // modifica giochi
   const [editGame, setEditGame] = useState({ gametitle: "", gamedescription: "" });
@@ -29,11 +30,14 @@ export default function GamesManager() {
   }, []);
 
   const fetchGames = async () => {
+    setLoading(true);
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API}game`);
       if (response.ok) {
         const gamesData = await response.json();
         setGames(gamesData);
+        setLoading(false);
       } else {
         throw new Error("Failed to fetch games");
       }
@@ -53,10 +57,10 @@ export default function GamesManager() {
         body: JSON.stringify(newGame),
       });
       if (response.ok) {
-        const addedGame = await response.json();
 
         fetchGames();
         setNewGame({ gametitle: "", gamedescription: "" });
+        
       } else {
         throw new Error("Errore nell'aggiunta del gioco");
       }
@@ -85,10 +89,11 @@ export default function GamesManager() {
         body: JSON.stringify(editGame),
       });
       if (response.ok) {
-        const updatedGame = await response.json();
+
 
         fetchGames();
         setEditGameId(null);
+
       } else {
         throw new Error("Errore nella modifica del gioco");
       }
@@ -101,6 +106,17 @@ export default function GamesManager() {
     setEditGameId(null);
     setEditGame({ gametitle: "", gamedescription: "" });
   };
+
+  if (loading) {
+    return (
+      <Container
+        style={{ marginTop: "250px" }}
+        className="d-flex justify-content-center"
+      >
+        <Loader />
+      </Container>
+    );
+  }
 
   return (
     <Container style={{ marginTop: "100px" }}>

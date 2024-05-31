@@ -9,7 +9,9 @@ import Profile from "./views/profile/Profile";
 import SessionsManager from "./views/sessions-manager/SessionsManager";
 import GamesManager from "./views/games-manager/GamesManager";
 import GameFooter from "./components/game-footer/GameFooter";
-import SessionEditor from "./views/session-editor/SessionEditor"
+import SessionEditor from "./views/session-editor/SessionEditor";
+import ProtectedAuthRoute from "./context/ProtectedAuthRoute";
+import NotFound from "./views/notfound/NotFound";
 
 function App() {
   /* const [sessions, setSessions] = useState([]);
@@ -51,13 +53,17 @@ function App() {
             />
 
             {/* Route da proteggere */}
+            <Route element={<ProtectedAuthRoute />}>
+
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/sessions" exact element={<SessionsManager />} />
             <Route path="/games" exact element={<GamesManager />} />
             <Route path="/session" element={<SessionEditor />} />
             <Route path="/session/:sessionId" element={<SessionEditor />} />
+            
+            </Route>
 
-
+            <Route path="/*" element={<NotFound />} />
 
           </Routes>
           </div>

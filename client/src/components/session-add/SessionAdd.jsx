@@ -17,7 +17,6 @@ export default function SessionAdd({ editSessionId }) {
   const [sessionCover, setSessionCover] = useState(null);
   const [games, setGames] = useState([]);
 
-  // gestione dei dati tutti insieme
   const [formData, setFormData] = useState({
     title: "",
     description: "",

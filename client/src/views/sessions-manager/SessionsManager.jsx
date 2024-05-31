@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Button, Stack, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import SessionCard from "../../components/session-card/SessionCard";
 import { UserContext } from "../../context/UserContextProvider";
 import PlayersList from "../../components/players-list/PlayersList";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaPen } from "react-icons/fa";
-import AddPlayer from "../../components/add-player/AddPlayer";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader/Loader";
 
 export default function SessionsManager() {
   const { userToken, userData } = useContext(UserContext);
@@ -78,7 +78,14 @@ export default function SessionsManager() {
   
 
   if (loading) {
-    return    <Spinner animation="border" variant="primary" />
+    return (
+      <Container
+        style={{ marginTop: "250px" }}
+        className="d-flex justify-content-center"
+      >
+        <Loader />
+      </Container>
+    );
   }
 
   return (

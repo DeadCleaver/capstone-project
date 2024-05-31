@@ -1,9 +1,9 @@
 - inserimento di giocatore che non corrisponde in perfezione all'utente già salvato nel DB // verifica doppioni, verifica esattezza dati giocatore rispetto a DB
 - Gestire gestione errata add giocatori
-- protezione delle routes
+√ protezione delle routes
 √ Gestione della visualizzazione delle card: sessioni passate, sessioni disponibili, 
-– nascondi o segnala le sessioni full
-- Fare "not found"
+√ nascondi o segnala le sessioni full
+√ Fare "not found"
 - Mettere conferma a eliminazione sessioni // da inserire ovunque
 - Anteprima immagini in modifica/aggiungi sessione
 - Modifica profilo (a parte)

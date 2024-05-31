@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Stack } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Stack } from "react-bootstrap";
 import SessionList from "../../components/session-list/SessionList";
 import SessionCarousel from "../../components/session-carousel/SessionCarousel";
+import Loader from "../../components/loader/Loader";
 
 const Home = () => {
   const [sessions, setSessions] = useState([]);
 
   const [upcomingSessions, setUpcomingSessions] = useState([]);
   const [passedSessions, setPassedSessions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchSessions();
@@ -32,6 +33,8 @@ const Home = () => {
   }, [sessions]);
 
   const fetchSessions = async () => {
+    setLoading(true);
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API}gamesession/`);
 
@@ -41,10 +44,23 @@ const Home = () => {
 
       const sessionsdata = await response.json();
       setSessions(sessionsdata);
+      setLoading(false);
+
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
     }
   };
+
+  if (loading) {
+    return (
+      <Container
+        style={{ marginTop: "250px" }}
+        className="d-flex justify-content-center"
+      >
+        <Loader />
+      </Container>
+    );
+  }
 
   return (
     <Container fluid="sm" style={{ marginTop: "100px" }}>

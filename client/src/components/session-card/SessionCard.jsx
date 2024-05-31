@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, CardHeader, CardSubtitle } from "react-bootstrap";
+import { Card, Row, Col, CardHeader, CardSubtitle, Badge } from "react-bootstrap";
 import Author from "../author/Author";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
@@ -35,7 +35,7 @@ export default function SessionCard(session) {
             <Col xs={6}>
               <strong >Giocatori:</strong>
             </Col>
-            <Col xs={6}>{`${players ? players.length : 0}/${maxplayers}`}</Col>
+            <Col xs={6}>{`${players ? players.length : 0}/${maxplayers}`} {players.length >= maxplayers && <Badge bg="danger" className="f-silkscreen f-s-8 border border-white fw-light ms-1">Chiusa</Badge>}</Col>
           </Row>
         </Card.Footer>
       </Card>

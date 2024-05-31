@@ -40,7 +40,6 @@ const LoginModal = ({ show, setShow }) => {
         const data = await response.json();
         const { user, token } = data;
 
-        // salva il token sia nel local storage che nel context
         localStorage.setItem("token", token);
         setUserToken(token);
 

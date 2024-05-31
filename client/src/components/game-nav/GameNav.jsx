@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Navbar } from "react-bootstrap";
 import logo from "../../assets/d20-logo.png";
 import AvatarDropdown from "../avatar-dropdown/AvatarDropdown";
 import { Link } from "react-router-dom";
@@ -13,11 +13,10 @@ export default function GameNav() {
             className="blog-navbar-brand"
             alt="logo"
             src={logo}
-            style={{ width: "30px" }}
+            style={{ width: "40px" }}
           />
-          <span className="ms-2 fw-bold">GAMING NIGHT</span>
+          <span className="ms-2 fw-bold fs-3">GAMING NIGHT</span>
         </Navbar.Brand>
-
        <div>
           <AvatarDropdown />
        </div>
