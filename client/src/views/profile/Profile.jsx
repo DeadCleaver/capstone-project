@@ -9,6 +9,7 @@ import {
   Stack,
 } from "react-bootstrap";
 import { UserContext } from "../../context/UserContextProvider";
+import Loader from "../../components/loader/Loader";
 
 export default function UserPanel({}) {
   const { userData, userToken } = useContext(UserContext);
@@ -61,12 +62,23 @@ export default function UserPanel({}) {
     }
   };
 
+  if (!userData) {
+    return (
+      <Container
+        style={{ marginTop: "250px" }}
+        className="d-flex justify-content-center"
+      >
+        <Loader />
+      </Container>
+    );
+  }
+
   return (
     <Container
       style={{ marginTop: "100px" }}
       className="d-flex justify-content-center mb-5"
     >
-      <Card className="border-blueviolet" style={{ maxWidth: "30rem" }}>
+      <Card className="border-blueviolet" style={{ width: "40rem" }}>
         <Card.Header className="bg-blueviolet f-silkscreen text-white text-center fw-bold">
           User Profile
         </Card.Header>
@@ -105,7 +117,9 @@ export default function UserPanel({}) {
             </Row>
           </Container>
           <Container>
-            {!showPasswordForm && (
+            {(!userData.googleid || userData.googleid.length === 0)  &&
+            <div>
+            {(!showPasswordForm !== "") && (
               <Stack
                 direction="horizontal"
                 gap={2}
@@ -165,6 +179,8 @@ export default function UserPanel({}) {
                 </Stack>
               </Form>
             )}
+            </div>
+          }
           </Container>
         </Card.Body>
       </Card>

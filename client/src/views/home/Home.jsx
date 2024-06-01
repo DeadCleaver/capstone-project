@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Container, Stack, Form, Row, Col } from "react-bootstrap";
+import { Container, Stack, Form, Row, Col, Accordion } from "react-bootstrap";
 import SessionList from "../../components/session-list/SessionList";
 import SessionCarousel from "../../components/session-carousel/SessionCarousel";
 import Loader from "../../components/loader/Loader";
+import "./Home.css";
 
 const Home = () => {
   const [sessions, setSessions] = useState([]);
@@ -43,9 +44,11 @@ const Home = () => {
     const availableGames = [
       ...new Set(sessions.map((session) => session.game.gametitle)),
     ];
+
     const availableCreators = [
-      ...new Set(sessions.map((session) => session.creator.name)),
+      ...new Set(sessions.map((session) => `${session.creator.name} ${session.creator.surname}`)),
     ];
+
     setGames(availableGames);
     setCreators(availableCreators);
 
@@ -78,7 +81,7 @@ const Home = () => {
 
     if (selectedCreator) {
       filteredSessions = filteredSessions.filter(
-        (session) => session.creator.name === selectedCreator
+        (session) => `${session.creator.name} ${session.creator.surname}` === selectedCreator
       );
     }
 
@@ -106,81 +109,78 @@ const Home = () => {
 
   return (
     <Container fluid="sm" style={{ marginTop: "90px" }}>
-      <Stack className="mb-3 bg-blueviolet-dark border border-white rounded p-2">
-        <Form className="text-white">
-          <Row>
-            <Col xs={1}>
-              <Form.Label className="f-silkscreen f-s-8">FILTRI</Form.Label>
-            </Col>
-            <Col>
-              <Row>
-                <Col xs={6}>
+        <Accordion className="mb-3">
+          <Accordion.Item eventKey="0" className="border-blueviolet">
+            <Accordion.Header>
+              <Stack className="text-center text-white f-silkscreen">
+                Filtri
+              </Stack>
+            </Accordion.Header>
+            <Accordion.Body className="border-blueviolet-dark shadow">
+              <Form className="text-white">
+                <Row>
+                  <Col xs={12} md={6}>
                   <Form.Group controlId="formGame">
-                    <Row>
-                      <Col xs={1}>
-                        <Form.Label className="f-silkscreen f-s-8">
-                          Gioco
-                        </Form.Label>
-                      </Col>
-                      <Col>
-                        <Form.Control
-                          size="sm"
-                          as="select"
-                          value={selectedGame}
-                          onChange={(e) => setSelectedGame(e.target.value)}
-                        >
-                          <option value="">Tutti i Giochi</option>
-                          {games.map((game, index) => (
-                            <option key={index} value={game}>
-                              {game}
-                            </option>
-                          ))}
-                        </Form.Control>
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Col>
-
-                <Col xs={6}>
+                  <Form.Label className="f-silkscreen f-s-8 text-black">Gioco</Form.Label>
+                  <Form.Control
+                    size="sm"
+                    as="select"
+                    value={selectedGame}
+                    onChange={(e) => setSelectedGame(e.target.value)}
+                  >
+                    <option value="">Tutti i Giochi</option>
+                    {games.map((game, index) => (
+                      <option key={index} value={game}>
+                        {game}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                  </Col>
+                  <Col xs={12} md={6}>
                   <Form.Group controlId="formCreator">
-                    <Row>
-                      <Col xs={3}>
-                        <Form.Label className="f-silkscreen f-s-8">
-                          Organizzatore
-                        </Form.Label>
-                      </Col>
-                      <Col>
-                        <Form.Control
-                          size="sm"
-                          as="select"
-                          value={selectedCreator}
-                          onChange={(e) => setSelectedCreator(e.target.value)}
-                        >
-                          <option value="">Tutti gli Organizzatori</option>
-                          {creators.map((creator, index) => (
-                            <option key={index} value={creator}>
-                              {creator}
-                            </option>
-                          ))}
-                        </Form.Control>
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Form>
-      </Stack>
+                  <Form.Label className="f-silkscreen f-s-8 text-black">
+                    Organizzatore
+                  </Form.Label>
+                  <Form.Control
+                    size="sm"
+                    as="select"
+                    value={selectedCreator}
+                    onChange={(e) => setSelectedCreator(e.target.value)}
+                  >
+                    <option value="">Tutti gli Organizzatori</option>
+                    {creators.map((creator, index) => (
+                      <option key={index} value={creator}>
+                        {creator}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                  </Col>
+                </Row>
 
-      <Stack className="mb-2">
-        <h2 className="text-center">Sessioni Disponibli</h2>
-      </Stack>
-      <SessionList sessions={upcomingSessions} />
-      <Stack className="mb-2">
-        <h2 className="text-center">Sessioni Passate</h2>
-      </Stack>
-      <SessionList sessions={passedSessions} />
+              </Form>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+      {upcomingSessions.length > 0 && (
+        <div>
+          <Stack className="mb-2">
+            <h2 className="text-center">Sessioni Disponibli</h2>
+          </Stack>
+          <SessionList sessions={upcomingSessions} />
+        </div>
+      )}
+
+      {passedSessions.length > 0 && (
+        <div>
+          <Stack className="mb-2">
+            <h2 className="text-center">Sessioni Passate</h2>
+          </Stack>
+          <SessionList sessions={passedSessions} />
+        </div>
+      )}
     </Container>
   );
 };
