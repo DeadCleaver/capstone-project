@@ -12,10 +12,22 @@ import {
 import "./Register.css";
 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [formData, setFormData] = useState(
+    {
+      name: "",
+      surname: "",
+      email: "",
+      password: ""
+    }
+  )
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
+  };
+
   const [userAvatar, setUserAvatar] = useState(null);
 
   // gestione preview dell'avatar
@@ -39,10 +51,7 @@ export default function Register() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name,
-        surname,
-        email,
-        password,
+        ...formData,
         avatar:
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
       }),
@@ -97,8 +106,9 @@ export default function Register() {
               <Form.Group controlId="formUserEmail" className="m-1">
                 <Form.Label className="f-silkscreen">Email</Form.Label>
                 <Form.Control
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>
@@ -106,8 +116,9 @@ export default function Register() {
               <Form.Group controlId="formUserName" className="m-1">
                 <Form.Label className="f-silkscreen">Nome</Form.Label>
                 <Form.Control
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>
@@ -115,8 +126,9 @@ export default function Register() {
               <Form.Group controlId="formUserSurname" className="m-1">
                 <Form.Label className="f-silkscreen">Cognome</Form.Label>
                 <Form.Control
-                  value={surname}
-                  onChange={(e) => setSurname(e.target.value)}
+                  name="surname"
+                  value={formData.surname}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>
@@ -124,7 +136,9 @@ export default function Register() {
               <Form.Group controlId="formUserPassword" className="m-1">
                 <Form.Label className="f-silkscreen">Password</Form.Label>
                 <Form.Control
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>

@@ -61,7 +61,7 @@ export default function PlayersList({
             )}
           </Stack>
         ))}
-      {open && <AddPlayer sessionId={sessionId} refresh={refresh} />}
+      {open && <AddPlayer sessionId={sessionId} refresh={refresh} players={players} />}
     </Card>
   );
 }

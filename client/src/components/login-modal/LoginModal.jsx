@@ -71,7 +71,7 @@ const LoginModal = ({ show, setShow }) => {
       </ModalHeader>
       <Modal.Body className="bg-darkslate">
         <Form>
-          <Form.Group controlId="form-user-email">
+          <Form.Group controlId="login-user-email">
             <InputGroup className="mb-2 border-blueviolet">
               <InputGroupText className="f-silkscreen text-black bg-white " style={{width: "120px"}}>
                 Email
@@ -83,7 +83,7 @@ const LoginModal = ({ show, setShow }) => {
             </InputGroup>
           </Form.Group>
 
-          <Form.Group controlId="form-user-password">
+          <Form.Group controlId="login-user-password">
             <InputGroup>
               <InputGroupText className="f-silkscreen text-black bg-white" style={{width: "120px"}}>
                 Password

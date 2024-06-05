@@ -1,49 +1,103 @@
 import React from "react";
-import { Card, Row, Col, CardHeader, CardSubtitle, Badge } from "react-bootstrap";
+import {
+  Card,
+  Row,
+  Col,
+  CardHeader,
+  CardSubtitle,
+  Badge,
+  Stack,
+} from "react-bootstrap";
 import Author from "../author/Author";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import "./SessionCard.css";
+import { MdOutlineDateRange } from "react-icons/md";
+import { MdLocationPin } from "react-icons/md";
+import { FaDice } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 
 export default function SessionCard(session) {
-  const { title, description, game, creator, cover, date, _id, players, maxplayers } =
-    session;
+  const {
+    title,
+    description,
+    game,
+    city,
+    creator,
+    cover,
+    date,
+    _id,
+    players,
+    maxplayers,
+    minplayers,
+  } = session;
 
   const formattedDate = format(new Date(date), "dd/MM/yyyy");
 
   return (
-
     <Link to={`/gamesession/${_id}`} className="session-card-link">
-      <Card className="session-card border-blueviolet shadow">
+      <Card className="session-card border-blueviolet shadow position-relative">
+        {players.length >= maxplayers && (
+          <Badge
+            bg="danger"
+            className="f-silkscreen f-s-8 border border-white fw-light ms-1 position-absolute top-0 translate-middle-y shadow"
+          >
+            Full
+          </Badge>
+        )}
         <Card.Img variant="top" src={cover} className="session-card-cover" />
         <Card.ImgOverlay className="d-flex flex-column justify-content-between">
-            <div>
+          <div>
             <Card.Title className="fs-5 m-0 mb-1" style={{ color: "white" }}>
-              {title}
+              <div className="text-truncate">{title}</div>
             </Card.Title>
-            </div>
-            <div className="author-box text-white">
-            <Author {...creator}/>
-            </div>
+          </div>
+          <div className="author-box text-white">
+            <Author {...creator} />
+          </div>
         </Card.ImgOverlay>
-        <Card.Footer className="f-silkscreen bg-blueviolet f-s-8 text-white">
-        <Row className="mb-2">
-            <Col xs={5}>
-              <strong >Gioco:</strong>
+        <Card.Footer className="f-silkscreen bg-blueviolet">
+          <Row className="mb-2">
+            <Col xs={7}>
+              <div className="text-truncate">
+                <span className="me-2 text-white">
+                  <MdOutlineDateRange />
+                </span>
+                <span className="f-s-8">{formattedDate}</span>
+              </div>
             </Col>
-            <Col xs={7}>{game.gametitle}</Col>
+            <Col xs={5} className="text-truncate">
+              <div className="text-truncate">
+                <span className="me-2 text-white">
+                  <MdLocationPin />
+                </span>
+                <span className="f-s-8">{city.city}</span>
+              </div>
+            </Col>
           </Row>
           <Row className="mb-2">
-            <Col xs={5}>
-              <strong >Data:</strong>
+            <Col xs={7}>
+              <div className="text-truncate">
+                <span className="me-2 text-white">
+                  <FaDice />
+                </span>
+                <span className="f-s-8">{game.gametitle}</span>
+              </div>
             </Col>
-            <Col xs={7}>{formattedDate}</Col>
-          </Row>
-          <Row className="mb-2">
             <Col xs={5}>
-              <strong >Giocatori:</strong>
+              <span className="me-2 text-white">
+                <FaUsers />
+              </span>
+              <span className="text-black f-s-10">
+                {" "}
+                <span
+                  className={
+                    players.length < minplayers ? `text-warning` : `text-black`
+                  }
+                >{`${players ? players.length : 0}`}</span>
+                {`/${maxplayers}`}
+              </span>
             </Col>
-            <Col xs={7}>{`${players ? players.length : 0}/${maxplayers}`} {players.length >= maxplayers && <Badge bg="danger" className="f-silkscreen f-s-8 border border-white fw-light ms-1">Chiusa</Badge>}</Col>
           </Row>
         </Card.Footer>
       </Card>

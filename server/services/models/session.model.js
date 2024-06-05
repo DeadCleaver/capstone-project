@@ -18,6 +18,11 @@ const sessionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Game',
       required: true
+    }, 
+    city: {
+      type: Schema.Types.ObjectId,
+      ref: 'City',
+      required: false
     },
     maxplayers: {
       type: Number,

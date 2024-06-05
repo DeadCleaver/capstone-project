@@ -15,8 +15,10 @@ const Home = () => {
   // selettori/filtro
   const [games, setGames] = useState([]);
   const [creators, setCreators] = useState([]);
+  const [cities, setCities] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
   const [selectedCreator, setSelectedCreator] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     fetchSessions();
@@ -46,14 +48,23 @@ const Home = () => {
     ];
 
     const availableCreators = [
-      ...new Set(sessions.map((session) => `${session.creator.name} ${session.creator.surname}`)),
+      ...new Set(
+        sessions.map(
+          (session) => `${session.creator.name} ${session.creator.surname}`
+        )
+      ),
+    ];
+
+    const availableCities = [
+      ...new Set(sessions.map((session) => session.city.city)),
     ];
 
     setGames(availableGames);
     setCreators(availableCreators);
+    setCities(availableCities);
 
     filterSessions();
-  }, [sessions, selectedGame, selectedCreator]);
+  }, [sessions, selectedGame, selectedCreator, selectedCity]);
 
   // vecchio filtro per data
   /* useEffect(() => {
@@ -81,7 +92,15 @@ const Home = () => {
 
     if (selectedCreator) {
       filteredSessions = filteredSessions.filter(
-        (session) => `${session.creator.name} ${session.creator.surname}` === selectedCreator
+        (session) =>
+          `${session.creator.name} ${session.creator.surname}` ===
+          selectedCreator
+      );
+    }
+
+    if (selectedCity) {
+      filteredSessions = filteredSessions.filter(
+        (session) => session.city.city === selectedCity
       );
     }
 
@@ -109,60 +128,81 @@ const Home = () => {
 
   return (
     <Container fluid="sm" style={{ marginTop: "90px" }}>
-        <Accordion className="mb-3">
-          <Accordion.Item eventKey="0" className="border-blueviolet">
-            <Accordion.Header>
-              <Stack className="text-center text-white f-silkscreen">
-                Filtri
-              </Stack>
-            </Accordion.Header>
-            <Accordion.Body className="border-blueviolet-dark shadow">
-              <Form className="text-white">
-                <Row>
-                  <Col xs={12} md={6}>
+      <Accordion className="mb-3">
+        <Accordion.Item eventKey="0" className="border-blueviolet">
+          <Accordion.Header>
+            <Stack className="text-center text-white f-silkscreen">
+              Filtri
+            </Stack>
+          </Accordion.Header>
+          <Accordion.Body className="border-blueviolet-dark shadow">
+            <Form className="text-white">
+              <Row>
+                <Col xs={12} lg={4}>
                   <Form.Group controlId="formGame">
-                  <Form.Label className="f-silkscreen f-s-8 text-black">Gioco</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    as="select"
-                    value={selectedGame}
-                    onChange={(e) => setSelectedGame(e.target.value)}
-                  >
-                    <option value="">Tutti i Giochi</option>
-                    {games.map((game, index) => (
-                      <option key={index} value={game}>
-                        {game}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-                  </Col>
-                  <Col xs={12} md={6}>
+                    <Form.Label className="f-silkscreen f-s-8 text-black">
+                      Gioco
+                    </Form.Label>
+                    <Form.Control
+                      size="sm"
+                      as="select"
+                      value={selectedGame}
+                      onChange={(e) => setSelectedGame(e.target.value)}
+                    >
+                      <option value="">Tutti i Giochi</option>
+                      {games.map((game, index) => (
+                        <option key={index} value={game}>
+                          {game}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col xs={12} lg={4}>
                   <Form.Group controlId="formCreator">
-                  <Form.Label className="f-silkscreen f-s-8 text-black">
-                    Organizzatore
-                  </Form.Label>
-                  <Form.Control
-                    size="sm"
-                    as="select"
-                    value={selectedCreator}
-                    onChange={(e) => setSelectedCreator(e.target.value)}
-                  >
-                    <option value="">Tutti gli Organizzatori</option>
-                    {creators.map((creator, index) => (
-                      <option key={index} value={creator}>
-                        {creator}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-                  </Col>
-                </Row>
-
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+                    <Form.Label className="f-silkscreen f-s-8 text-black">
+                      Organizzatore
+                    </Form.Label>
+                    <Form.Control
+                      size="sm"
+                      as="select"
+                      value={selectedCreator}
+                      onChange={(e) => setSelectedCreator(e.target.value)}
+                    >
+                      <option value="">Tutti gli Organizzatori</option>
+                      {creators.map((creator, index) => (
+                        <option key={index} value={creator}>
+                          {creator}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col xs={12} lg={4}>
+                  <Form.Group controlId="formCity">
+                    <Form.Label className="f-silkscreen f-s-8 text-black">
+                      Luogo
+                    </Form.Label>
+                    <Form.Control
+                      size="sm"
+                      as="select"
+                      value={selectedCity}
+                      onChange={(e) => setSelectedCity(e.target.value)}
+                    >
+                      <option value="">Tutti i Luoghi</option>
+                      {cities.map((city, index) => (
+                        <option key={index} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Form>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
 
       {upcomingSessions.length > 0 && (
         <div>

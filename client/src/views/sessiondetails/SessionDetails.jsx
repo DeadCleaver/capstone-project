@@ -8,7 +8,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  ListGroup
+  ListGroup,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "./SessionDetails.css";
@@ -22,6 +22,7 @@ export default function SessionDetails() {
   const [loading, setLoading] = useState(true);
   const { userData } = useContext(UserContext);
 
+
   const params = useParams();
 
   useEffect(() => {
@@ -29,7 +30,6 @@ export default function SessionDetails() {
   }, []);
 
   const fetchSession = async () => {
-
     setLoading(true);
     const { id } = params;
 
@@ -50,6 +50,7 @@ export default function SessionDetails() {
       console.error("Errore nella chiamata al server: ", error);
     }
   };
+
 
   const formatDate = (date) => {
     if (!date) return "";
@@ -86,9 +87,8 @@ export default function SessionDetails() {
                 gap={2}
                 className="justify-content-between"
               >
-                <h6 className="m-0 f-s-10">{`Data: ${formatDate(
-                  session.date
-                )}`}</h6>
+                <h6 className="m-0 f-s-10">{`Il ${formatDate(
+                  session.date)} a ${session.city.city}`}</h6>
                 <h6 className="m-0 f-s-10">{`Giocatori: ${
                   session.players ? session.players.length : 0
                 }/${session.maxplayers} (minimo ${session.minplayers})`}</h6>

@@ -11,16 +11,19 @@ import {
 } from "react-bootstrap";
 import { UserContext } from "../../context/UserContextProvider";
 import "./SessionAdd.css";
+import Select from "react-select";
 
 export default function SessionAdd({ editSessionId }) {
   const { userData, userToken } = useContext(UserContext);
   const [sessionCover, setSessionCover] = useState(null);
   const [games, setGames] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     game: "",
+    city: "",
     maxplayers: 1,
     minplayers: 1,
     date: "",
@@ -29,15 +32,16 @@ export default function SessionAdd({ editSessionId }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
-  // caricamento della lista giochi 
+  // caricamento della lista giochi
   useEffect(() => {
     fetchGames();
+    fetchCities();
   }, []);
 
   useEffect(() => {
-
     if (editSessionId) {
       fetchSession(editSessionId);
     } else {
@@ -49,12 +53,10 @@ export default function SessionAdd({ editSessionId }) {
         minplayers: 1,
         date: "",
       });
-
     }
   }, [editSessionId]);
 
   const fetchSession = async () => {
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API}gamesession/${editSessionId}`
@@ -66,7 +68,6 @@ export default function SessionAdd({ editSessionId }) {
 
       const sessiondata = await response.json();
       setFormData(sessiondata);
-
     } catch (error) {
       console.error("Errore nella chiamata al server: ", error);
     }
@@ -83,6 +84,20 @@ export default function SessionAdd({ editSessionId }) {
       }
     } catch (error) {
       console.error("Error fetching games:", error);
+    }
+  };
+
+  const fetchCities = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}city`);
+      if (response.ok) {
+        const citiesData = await response.json();
+        setCities(citiesData);
+      } else {
+        throw new Error("Errore nel recupero dell'elenco città");
+      }
+    } catch (error) {
+      console.error("Errore nel recupero dell'elenco città:", error);
     }
   };
 
@@ -147,9 +162,11 @@ export default function SessionAdd({ editSessionId }) {
   // modifica della sessione
   const handleModifySession = async (e) => {
     e.preventDefault();
-    const confirmed = window.confirm("Sei sicuro di voler modificare questa sessione?");
+    const confirmed = window.confirm(
+      "Sei sicuro di voler modificare questa sessione?"
+    );
     if (!confirmed) return;
-  
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API}gamesession/${editSessionId}`,
@@ -177,7 +194,6 @@ export default function SessionAdd({ editSessionId }) {
     }
   };
 
-
   return (
     <Card className="border-blueviolet">
       <CardHeader className="bg-blueviolet f-silkscreen text-white">
@@ -199,28 +215,55 @@ export default function SessionAdd({ editSessionId }) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="game">
-              <Form.Control
-                as="select"
-                name="game"
-                value={formData.game}
-                onChange={(e) => {
-                  const gameId = e.target.value;
-                  setFormData({ ...formData, game: gameId });
-                }}
-                required
-              >
-                <option value="">Seleziona un gioco</option>
-                {games.map((game) => (
-                  <option key={game._id} value={game._id}>
-                    {game.gametitle}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+            <Row>
+              <Col xs={6}>
+                <Form.Group className="mb-3" controlId="game">
+                  <Form.Control
+                    as="select"
+                    name="game"
+                    value={formData.game}
+                    onChange={(e) => {
+                      const gameId = e.target.value;
+                      setFormData({ ...formData, game: gameId });
+                    }}
+                    required
+                  >
+                    <option value="">Seleziona un gioco</option>
+                    {games.map((game) => (
+                      <option key={game._id} value={game._id}>
+                        {game.gametitle}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                <Form.Group className="mb-3" controlId="game">
+                  <Form.Control
+                    as="select"
+                    name="city"
+                    value={formData.city}
+                    onChange={(e) => {
+                      const cityId = e.target.value;
+                      setFormData({ ...formData, city: cityId });
+                    }}
+                    required
+                  >
+                    <option value="">Seleziona un luogo</option>
+                    {cities.map((city) => (
+                      <option key={city._id} value={city._id}>
+                        {city.city}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
 
             <Form.Group className="mb-3" controlId="description">
-              <Form.Label className="f-silkscreen f-s-10">Descrizione</Form.Label>
+              <Form.Label className="f-silkscreen f-s-10">
+                Descrizione
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 name="description"
@@ -233,7 +276,9 @@ export default function SessionAdd({ editSessionId }) {
             <Row>
               <Col xs={6}>
                 <Form.Group className="mb-3" controlId="date">
-                  <Form.Label className="f-silkscreen f-s-10">Giorno</Form.Label>
+                  <Form.Label className="f-silkscreen f-s-10">
+                    Giorno
+                  </Form.Label>
                   <Form.Control
                     type="date"
                     name="date"
@@ -291,8 +336,7 @@ export default function SessionAdd({ editSessionId }) {
             </Row>
 
             <div className="d-flex justify-content-center">
-
-            {editSessionId ? (
+              {editSessionId ? (
                 <Button
                   variant="warning"
                   type="submit"

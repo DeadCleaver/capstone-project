@@ -9,40 +9,41 @@ export default function UserContextProvider({ children }) {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (userToken) {
-        try {
-          const response = await fetch(`${process.env.REACT_APP_API}user/me`, {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${userToken}`
-            }
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            setUserData(data);
-          } else {
-            console.error("Erroe nel recupero delle informazioni utente");
-            setUserData(null);
-          }
-        } catch (error) {
-          console.error("Errore nel recupero delle informazioni utente:", error);
-          setUserData(null);
-        }
-      } else {
-        setUserData(null);
-      }
-    };
-
     fetchUserData();
   }, [userToken]);
+
+  const fetchUserData = async () => {
+    if (userToken) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API}user/me`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${userToken}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        } else {
+          console.error("Erroe nel recupero delle informazioni utente");
+          setUserData(null);
+        }
+      } catch (error) {
+        console.error("Errore nel recupero delle informazioni utente:", error);
+        setUserData(null);
+      }
+    } else {
+      setUserData(null);
+    }
+  };
 
   const value = {
     userToken,
     setUserToken,
     userData, 
-    setUserData
+    setUserData,
+    fetchUserData
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

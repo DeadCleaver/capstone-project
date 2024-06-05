@@ -9,6 +9,7 @@ import gameRoute from "./services/routes/game.route.js";
 import cors from "cors";
 import passport from "passport";
 import googleStrategy from "./services/auth/passport.js"
+import { cityRoute } from "./services/routes/city.route.js";
 
 
 config();
@@ -27,6 +28,7 @@ app.use("/auth", authRoute)
 app.use("/user", userRoute);
 app.use("/game", gameRoute)
 app.use("/gamesession", sessionRoute);
+app.use("/city", cityRoute)
 app.use(unauthorizedHandler);
 app.use(badRequestHandler);
 app.use(notfoundHandler);
