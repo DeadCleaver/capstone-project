@@ -21,6 +21,15 @@ export default function AddPlayer({ sessionId, refresh, players }) {
   }, [userData, players]); 
 
   const handleAddPlayer = async () => {
+
+    const playerAlreadyAdded = players.some(player => player.email === email);
+
+    if (playerAlreadyAdded) {
+      alert("Giocatore già presente!");
+     return;
+    }
+
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API}gamesession/${sessionId}/players`,
