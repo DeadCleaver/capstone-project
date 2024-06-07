@@ -3,10 +3,7 @@ import {
   Card,
   Row,
   Col,
-  CardHeader,
-  CardSubtitle,
   Badge,
-  Stack,
 } from "react-bootstrap";
 import Author from "../author/Author";
 import { format } from "date-fns";

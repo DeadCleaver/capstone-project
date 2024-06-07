@@ -66,21 +66,6 @@ const Home = () => {
     filterSessions();
   }, [sessions, selectedGame, selectedCreator, selectedCity]);
 
-  // vecchio filtro per data
-  /* useEffect(() => {
-    const upcoming = sessions.filter(
-      (session) => new Date(session.date) >= new Date()
-    );
-
-    setUpcomingSessions(upcoming);
-
-    const passed = sessions.filter(
-      (session) => new Date(session.date) < new Date()
-    );
-
-    setPassedSessions(passed);
-  }, [sessions]); */
-
   const filterSessions = () => {
     let filteredSessions = sessions;
 

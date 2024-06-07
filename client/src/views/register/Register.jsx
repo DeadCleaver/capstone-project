@@ -172,11 +172,6 @@ export default function Register() {
             </Form>
           </Card>
         </Col>
-        {/*         <Col xs={6}>
-          <Card>
-            <img src={previewAvatar || staticAvatar} alt="Avatar" className="avatar-img" />
-          </Card>
-        </Col> */}
       </Row>
     </Container>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Image, Row, Stack } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
 import "./Author.css";
 
 const Author = (props) => {
