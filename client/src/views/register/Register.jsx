@@ -88,7 +88,7 @@ export default function Register() {
       }
 
       const { avatar } = await response.json();
-      alert("Avatar image added successfully:", avatar);
+      console.log("Avatar image added successfully:", avatar);
     } catch (error) {
       console.error("Error adding avatar image:", error);
     }

@@ -49,7 +49,9 @@ export default function SessionCard(session) {
         <Card.ImgOverlay className="d-flex flex-column justify-content-between">
           <div>
             <Card.Title className="fs-5 m-0 mb-1" style={{ color: "white" }}>
-              <div className="text-truncate">{title}</div>
+              <div className="text-truncate bg-blueviolet border border-blueviolet rounded p-1 text-center fs-6">
+                {title}
+              </div>
             </Card.Title>
           </div>
           <div className="author-box text-white">

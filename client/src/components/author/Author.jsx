@@ -15,7 +15,7 @@ const Author = (props) => {
     </Col>
     <Col>
       <div className="my-auto">
-        <h6 className="f-silkscreen mt-2 fs-6">
+        <h6 className={`f-silkscreen mt-2 fs-6`}>
           {name} {surname}
         </h6>
       </div>

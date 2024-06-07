@@ -58,3 +58,7 @@ code {
 .f-s-8 {
   font-size: 8pt;
 }
+
+.txt-stroke {
+  -webkit-text-stroke: 1.5px black;
+}

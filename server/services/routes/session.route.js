@@ -123,8 +123,12 @@ sessionRoute.post("/:sessionId/players", async (req, res, next) => {
   try {
     let user = await User.findOne({ email });
 
-    // se il giocatore non esiste come utente  gli crea un utente
-    if (!user) {
+    // se il giocatore non esiste come utente  gli crea un utente, se esiste verifica che i dati siano uguali a quelli registrati
+    if (user) {
+      if (user.name !== name || user.surname !== surname) {
+        return res.status(400).send("Nome e/o cognome non corrispondono ai dati registrati");
+      }
+    } else {
       user = new User({ name, surname, email });
       await user.save();
     }
@@ -137,6 +141,11 @@ sessionRoute.post("/:sessionId/players", async (req, res, next) => {
     // Verifica se il numero di giocatori è già al massimo
     if (session.players.length >= session.maxplayers) {
       return res.status(400).send("Numero massimo di giocatori raggiunto");
+    }
+
+    // Verifica che il giocatore non sia già presente nell'elenco
+    if (session.players.includes(user._id)) {
+      return res.status(400).send("Il giocatore è già stato aggiunto alla sessione");
     }
 
     // aggiungi il giocatore alla sessione
@@ -164,7 +173,7 @@ sessionRoute.delete("/:sessionId/players/:playerId", async (req, res, next) => {
     if (playerIndex === -1) {
       return res.status(404).send("Giocatore non presente");
     }
-
+    
     session.players.splice(playerIndex, 1);
 
     await session.save();
